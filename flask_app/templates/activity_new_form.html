@@ -41,7 +41,9 @@
                         <!-- dropdown menu -->
                         <select name="activity">
                             <option value="">--Select Activity--</option>
+                            {% if session['activity'] is defined %}
                             <option value="{{session['activity']}}" hidden selected >{{session['activity']}}</option>
+                            {% endif%}
                             <option value="Climbing">Climbing</option>
                             <option value="Cycling">Cycling</option>
                             <option value="Mtn. Biking">Mtn. Biking</option>
