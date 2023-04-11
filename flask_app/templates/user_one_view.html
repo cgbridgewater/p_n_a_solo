@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name.upper()}}'s profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <!-- main wrapper -->
+    <main>
+        <!-- logo bar -->
+        <div>
+            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
+        </div>
+        <!-- top wrapper -->
+        <div class="top_wrapper">
+            <!-- User Data -->
+            <div class="profile_info">  
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td><h1 class="user">{{user.first_name}}'s Info</h1></td>
+                            <td>
+                                <div class="flex2">
+                                    <a class="profile_button btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside"   role="button">HOME</a>
+                                    <a onclick="myalert()"  class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/{{user.id}}/follow" role="button">Follow</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h4>Name:</h4></td>
+                            <td><h4>{{ user.first_name }} {{ user.last_name }}</h4></td>
+                        </tr>
+                        <tr>
+                            <td><h4>Member Since:</h4></td>
+                            <td><h4>{{ user.created_at.strftime("%B %e, %Y %I:%M %p") }}</h4></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+            <!-- End User Data -->
+            <!-- Right Box -->
+            <div class="friend_right">
+                <!-- title and button -->
+                <div>
+                    <h4>Activities {{ user.first_name }} is Leading</h4>    
+                </div>
+                <!-- activity list -->
+                <div class="activity_links">
+                    <!-- loop through activities -->
+                    {% for activity in activities %}
+                        <!-- filter for only logged in user -->
+                        {% if activity.creator.id == user.id %}
+                        <!-- display data -->
+                            <h5>
+                                <a class="link" href="/getoutside/activity/{{activity.id}}"> {{ user.first_name }}'s going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                            </h5>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- End Main -->
+</body>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/activityform.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <!-- main content box -->
+    <main>
+        <!-- Get OUTSIDE Logo -->
+        <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
+        <!-- TOPO Container -->
+        <div class="background">
+            <!-- Login Form Wrapper -->
+            <div class="activity_form">
+                <!-- header -->
+                <h3>Update your activity</h3>
+                <!-- validation error return -->
+                {% with messages = get_flashed_messages(category_filter=["activity"]) %}
+                    <!-- declare a variable called messages -->
+                    {% if messages %}
+                        <!-- check if there are any messages -->
+                        {% for message in messages %}
+                        <!-- loop through the messages -->
+                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <!-- End validation error return -->
+                <!-- form start -->
+                <form action='/getoutside/activity/{{activity.id}}/edit' method="POST">
+                    <!-- Input 1 -->
+                    <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                    <div class="form_control">
+                        <label for="activity">Activity Type:</label>
+                        <!-- dropdown menu -->
+                        <select name="activity" value="{{activity.activity}}">
+                            <option value="{{activity.activity}}" hidden selected >{{activity.activity}}</option>
+                            <option value="Climbing">Climbing</option>
+                            <option value="Cycling">Cycling</option>
+                            <option value="Mtn. Biking">Mtn. Biking</option>
+                            <option value="Golfing">Golfing</option>
+                            <option value="Hiking">Hiking</option>
+                            <option value="Paddling">Paddling</option>
+                            <option value="Rowing">Rowing</option>
+                            <option value="Running">Running</option>
+                            <option value="Skiing">Skiing</option>
+                            <option value="Snowboarding">Snowboarding</option>
+                            <option value="Snowshoeing">Snowshoeing</option>
+                            <option value="Swimming">Swimming</option>
+                        </select>
+                        <!-- end dropdown menu -->
+                    </div>
+                    <!-- End Input 1 -->
+                    <!-- Input 2 -->
+                    <div class="form_control">
+                        <label for="location">Activity Location:</label>
+                        <input type="text" name="location"  value="{{activity.location}}" >
+                    </div>
+                    <!-- End Input 2 -->
+                    <!-- Input  -->
+                    <div class="form_control">
+                        <label for="date">Date:</label>
+                        <input type="date" name="date" value="{{activity.date.strftime("%Y-%m-%d")}}">
+                    </div>
+                    <div>
+                    <!-- End Input 3 -->
+                    <!-- Buttons -->
+                    <div class="flex">
+                        <button type="submit" value="update" class="click input mt-1 text-light bg-success bg-gradient rounded-1 ">UPDATE</button>
+                        <a href="/getoutside/activity/{{activity.id}}" class="click btn btn-sm border-dark mt-1 text-light bg-danger bg-gradient rounded-1" role="button">CANCEL</a>
+                    </div>
+                    <!-- End Buttons -->
+                </form>
+                <!--form END -->
+            </div>
+            <!-- END Login Form Wrapper -->
+        </div>
+        <!-- END TOPO Container -->
+    </main>
+</body>
+</html>

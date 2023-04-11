@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <!-- main content box -->
+    <main>
+        <!-- OUTSIDE Logo -->
+        <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
+        <!-- background image container -->
+        <div class="background">
+            <!-- login container -->
+            <div class="login_container">
+                <!-- Login Form Wrapper -->
+                <div class="login">
+                    <!-- header -->
+                    <h3 class="title">Login to Get OUTSIDE</h3>
+                    <!-- validation error return -->
+                    {% with messages = get_flashed_messages(category_filter=["login"]) %}
+                        <!-- declare a variable called messages -->
+                        {% if messages %}
+                            <!-- check if there are any messages -->
+                            {% for message in messages %}
+                            <!-- loop through the messages -->
+                                <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <!-- form start -->
+                    <form action='/getoutside/login' method="POST">
+                        <!-- Email Section -->
+                        <div class="text-start">
+                            <label for="email">Email:</label>
+                        </div>
+                        <div>
+                            <input type="text" name="email" class="input form-control bg-light" value="{{session['email2']}}">
+                        </div>
+                        <!-- End Email Section -->
+                        <!-- Password Section -->
+                        <div class="text-start">
+                            <label for="password">Password:</label>
+                        </div>
+                        <div>
+                            <input type="password" name="password" class="input form-control bg-light">
+                        </div>
+                        <!-- Password Section -->
+                        <!-- submit and signup link -->
+                        <div class="flex">
+                            <button type="submit" value="Login" class="input mt-1 text-light bg-success bg-gradient rounded-2">Get OUTSIDE</button>
+                            <p>Not a member yet? <a href="/getoutside/register">Sign Up!</a></p>
+                        <!-- End submit and signup link -->
+                        </div>
+                    </form>
+                    <!--form END -->
+                </div>
+                <!-- end login wrapper  -->
+            </div>
+            <!--end login container  -->
+        </div>
+        <!-- end background container -->
+    </main>
+</body>
+</html>

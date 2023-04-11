@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="bg-secondary bg-gradient bg-opacity-10">
+
+    <!-- logo bar -->
+    <div>
+        <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
+    </div> 
+    <!-- main wrapper -->
+    <main>
+        <!-- content wrapper -->
+        <div class="content">
+            <!-- welcome title -->
+            <div class="welcome">
+                <h1>Welcome {{user.first_name}}, &nbsp; </h1>
+                <h6 class="time">It's time to</h6>
+                <h2 class="outside">Get OUTSIDE!</h2>    
+            </div>
+            <a href="/logout" class="profile_button btn btn-danger border-1 border-dark text-decoration-none text-light">LOG OFF AND GET OUTSIDE</a>
+            <!-- end welcome title -->
+            <!-- main wrapper -->
+            <div class="wrapper">
+                <!-- top row -->
+                <div class="flex">
+                    <h5 class="green">See what everyone is up to!</h5>
+                    <a class="btn btn-primary m-1 p-1 opacity-75 rounded-2 border-2 border-dark "  href="/getoutside/athlete"  role="button">VIEW PROFILE</a>
+                </div>
+                <!-- bottom row -->
+                <div class="flex">
+                    <h6>(click on activities to view details)</h6>
+                    <a class="btn btn-success m-1 p-1 opacity-75 rounded-2 border-2 border-dark "  href="/getoutside/friends"   role="button">FIND FRIENDS</a>
+                </div>
+                <!-- table -->
+                <table class="activity_table table table-hover border border-3 border-success">
+                    <tr>
+                    <!-- loop through activities -->
+                    {% for activity in activities %}
+                    <!-- filter logged in user -->
+                    {% if session.user_id != activity.creator.id %}
+                        <!-- display data -->
+                        <td>   
+                            <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                        </td> 
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+                <!-- Table END -->
+            </div>
+        </div>
+        <!-- End Contend Wrapper -->
+    </main>
+    <!-- End Main Wrapper -->
+</body>
+</html>
