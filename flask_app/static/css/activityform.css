@@ -34,14 +34,14 @@ h3 {
     margin: 2% 0;
 }
 
-label {
+.label_width {
     min-width: 125px;
     color: green;
     font-weight: 700;
     font-size: 18px;
 }
 
-input {
+.input_width {
     width: 200px;
     height: 30px;
     background-color: #FFFFF5;

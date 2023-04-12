@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name.upper()}}'s profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hamburger.css') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -19,22 +19,20 @@
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
-        <!-- hamburger menu -->
-        <nav role='navigation'>
-            <div id="menuToggle">
-                <input type="checkbox" />
+        <!-- end hamburger nav -->
+        <div class="hamburger-menu">
+            <input id="menu__toggle" type="checkbox" />
+            <label class="menu__btn" for="menu__toggle">
                 <span></span>
-                <span></span>
-                <span></span>
-                <ul id="menu">
-                    <a href="/getoutside"><li>Home</li></a>
-                    <a href="/getoutside/activities/new"><li>Add Activity</li></a>
-                    <a href="/getoutside/friends"><li>Find Friends</li></a>
-                    <a href="/logout"><li>Log-Out</li></a>
-                </ul>
-            </div>
-        </nav>
-        <!-- end hamburger menu -->
+            </label>
+            <ul class="menu__box">
+                <li><a class="menu__item" href="/getoutside">Home</a></li>
+                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
+                <li><a class="menu__item" href="/logout">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- end hamburger nav -->
         <!-- top wrapper -->
         <div class="top_wrapper">
             <!-- user image/name box -->

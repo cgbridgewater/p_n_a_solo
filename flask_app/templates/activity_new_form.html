@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hamburger.css') }}">
+    <title>Create A New Activity</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/activityform.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -13,22 +13,20 @@
 <body>
     <!-- main content box -->
     <main>
-        <!-- hamburger menu -->
-        <nav role='navigation'>
-            <div id="menuToggle">
-                <input type="checkbox" />
+        <!-- end hamburger nav -->
+        <div class="hamburger-menu">
+            <input id="menu__toggle" type="checkbox" />
+            <label class="menu__btn" for="menu__toggle">
                 <span></span>
-                <span></span>
-                <span></span>
-                <ul id="menu">
-                    <a href="/getoutside"><li>Home</li></a>
-                    <a href="/getoutside/athlete"><li>My Profile</li></a>
-                    <a href="/getoutside/friends"><li>Find Friends</li></a>
-                    <a href="/logout"><li>Log-Out</li></a>
-                </ul>
-            </div>
-        </nav>
-        <!-- end hamburger menu -->
+            </label>
+            <ul class="menu__box">
+                <li><a class="menu__item" href="/getoutside">Home</a></li>
+                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
+                <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
+                <li><a class="menu__item" href="/logout">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- end hamburger nav -->
         <!-- Get OUTSIDE Logo -->
         <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
         <!-- TOPO Container -->
@@ -54,7 +52,7 @@
                     <!-- Input 1 -->
                     <input type="hidden" name="user_id" value="{{session['user_id']}}">
                     <div class="form_control">
-                        <label for="activity">Activity Type:</label>
+                        <label class="label_width" for="activity">Activity Type:</label>
                         <!-- dropdown menu -->
                         <select name="activity">
                             <option value="">--Select Activity--</option>
@@ -79,20 +77,20 @@
                     <!-- End Input 1 -->
                     <!-- Input 2 -->
                     <div class="form_control">
-                        <label for="location">Activity Location:</label>
-                        <input type="text" name="location" value="{{session['location']}}">
+                        <label class="label_width" for="location">Activity Location:</label>
+                        <input class="input_width" type="text" name="location" value="{{session['location']}}">
                     </div>
                     <!-- End Input 2 -->
                     <!-- Input  -->
                     <div class="form_control">
-                        <label for="date">Date:</label>
-                        <input type="date" name="date" value="{{session['date']}}">
+                        <label class="label_width" for="date">Date:</label>
+                        <input class="input_width" type="date" name="date" value="{{session['date']}}">
                     </div>
                     <div>
                     <!-- End Input 3 -->
                     <!-- Buttons -->
                     <div class="flex">
-                        <button type="submit" value="Login" class="click input mt-1 text-light bg-success bg-gradient rounded-1 ">Get OUTSIDE</button>
+                        <button type="submit" value="Login" class="click input mt-1 text-light bg-success bg-gradient rounded-1 ">SUBMIT</button>
                         <a href="/getoutside/athlete" class="click btn btn-sm border-dark mt-1 text-light bg-danger bg-gradient rounded-1" role="button">CANCEL</a>
                     </div>
                     <!-- End buttons -->
