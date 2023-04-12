@@ -35,7 +35,7 @@
 .time{
     transform: rotate(-45deg);
     font-weight: 700;
-    color:saddlebrown;
+    color:darkred;
 }
 
 .outside {
@@ -46,9 +46,9 @@
 
 .welcome {
     margin-top: 30px;
-    margin-left: 10%;
     display: flex;
-    color:saddlebrown;
+    justify-content: center;
+    color:darkred;
 }
 
 .wrapper {

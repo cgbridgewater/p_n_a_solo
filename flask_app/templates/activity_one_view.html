@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View {{activity.creator.first_name}}'s Activity</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hamburger.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/one_view.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -14,6 +15,23 @@
 <body class="bg-secondary bg-gradient bg-opacity-10">
     <!-- main wrapper -->
     <main>
+        <!-- hamburger menu -->
+        <nav role='navigation'>
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="/getoutside"><li>Home</li></a>
+                    <a href="/getoutside/athlete"><li>My Profile</li></a>
+                    <a href="/getoutside/activities/new"><li>Add Activity</li></a>
+                    <a href="/getoutside/friends"><li>Find Friends</li></a>
+                    <a href="/logout"><li>Log-Out</li></a>
+                </ul>
+            </div>
+        </nav>
+        <!-- end hamburger menu -->
         <!-- logo bar -->
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
@@ -32,8 +50,6 @@
                     <div class="flex">
                         <h4 class="green">Details</h4>
                         <div class="buttons">
-                            <a class="btn btn-success rounded-2 m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside" role="button">HOME</a>
-                            <a class="btn btn-primary rounded-2  m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/athlete" role="button">PROFILE</a>
                             {% if activity.creator.id == session.user_id %}
                             <a class="btn btn-secondary rounded-2 m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/edit" role="button">EDIT</a>
                             <a class="btn btn-danger rounded-2  m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/delete" role="button">DELETE</a>

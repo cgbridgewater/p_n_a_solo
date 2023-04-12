@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name.upper()}}'s profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hamburger.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -13,6 +14,23 @@
 <body>
     <!-- main wrapper -->
     <main>
+        <!-- hamburger menu -->
+        <nav role='navigation'>
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="/getoutside"><li>Home</li></a>
+                    <a href="/getoutside/athlete"><li>My Profile</li></a>
+                    <a href="/getoutside/activities/new"><li>Add Activity</li></a>
+                    <a href="/getoutside/friends"><li>Find Friends</li></a>
+                    <a href="/logout"><li>Log-Out</li></a>
+                </ul>
+            </div>
+        </nav>
+        <!-- end hamburger menu -->
         <!-- logo bar -->
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
@@ -27,8 +45,7 @@
                             <td><h1 class="user">{{user.first_name}}'s Info</h1></td>
                             <td>
                                 <div class="flex2">
-                                    <a class="profile_button btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside"   role="button">HOME</a>
-                                    <a onclick="myalert()"  class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/{{user.id}}/follow" role="button">Follow</a>
+                                    <a onclick="myalert()"  class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/{{user.id}}/follow" role="button">FOLLOW</a>
                                 </div>
                             </td>
                         </tr>

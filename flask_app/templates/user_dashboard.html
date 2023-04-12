@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name.upper()}}'s profile</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hamburger.css') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -17,6 +19,22 @@
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
+        <!-- hamburger menu -->
+        <nav role='navigation'>
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="/getoutside"><li>Home</li></a>
+                    <a href="/getoutside/activities/new"><li>Add Activity</li></a>
+                    <a href="/getoutside/friends"><li>Find Friends</li></a>
+                    <a href="/logout"><li>Log-Out</li></a>
+                </ul>
+            </div>
+        </nav>
+        <!-- end hamburger menu -->
         <!-- top wrapper -->
         <div class="top_wrapper">
             <!-- user image/name box -->
@@ -30,9 +48,9 @@
                 </div>
                 <!-- profile buttons -->
                 <div class="button_flex">
-                    <a class="profile_button btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside"   role="button">HOME</a>
-                    <a class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/update"    role="button">EDIT</a>
-                    <a class="profile_button btn btn-danger m-1 p-1 rounded-2 border-2 border-dark " href="/logout"   role="button">LOG OUT</a>
+                    <!-- <a class="profile_button btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside"   role="button">HOME</a> -->
+                    <a class="find_friend btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/update"    role="button">EDIT</a>
+                    <!-- <a class="profile_button btn btn-danger m-1 p-1 rounded-2 border-2 border-dark " href="/logout"   role="button">LOG OUT</a> -->
                 </div>
             </div>
             <!-- end user image/name box -->
@@ -60,17 +78,19 @@
             <div class="friend_list_container">
                 <!-- find friend button -->
                 <div>
-                    <a class="find_friend btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/friends"  role="button">FIND FRIENDS</a>
+                    <!-- <a class="find_friend btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/friends"  role="button">FIND FRIENDS</a> -->
                 </div> 
+                <!-- title -->
+                <h4>My Friends</h4>
                 <!-- friends list -->
-                <div>
-                    <!-- title -->
-                    <h4>My Friends</h4>
+                <div class="friend_box">
                     <!-- list  -->
                     <div>
                         {% for follower in followers %}
                         <ul>
-                            <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
+                            <h5>
+                                <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
+                            </h5>
                         </ul>
                         {% endfor %}
                     </div>
@@ -88,7 +108,7 @@
             <div class="friend_left">
                 <!-- title and button -->
                 <div>
-                    <a class="add_activity btn btn-success m-1 p-1 rounded-2 border-2 border-dark"  href="/getoutside/activities/new" role="button">ADD ACTIVITY</a>
+                    <!-- <a class="add_activity btn btn-success m-1 p-1 rounded-2 border-2 border-dark"  href="/getoutside/activities/new" role="button">ADD ACTIVITY</a> -->
                     <h4>Activities I'm Leading</h4>    
                 </div>
                 <!-- activity list -->
@@ -109,7 +129,7 @@
             <div class="friend_right">
                 <!-- title and button-->
                 <div>
-                    <a class="all_activities btn btn-success m-1 p-1 rounded-2 border-2 border-dark"  href="/getoutside"  role="button">SEE ALL ACTIVITIES</a>
+                    <!-- <a class="all_activities btn btn-success m-1 p-1 rounded-2 border-2 border-dark"  href="/getoutside"  role="button">SEE ALL ACTIVITIES</a> -->
                     <h4>Activities I'm Joining</h4>
                 </div>
                 <!-- activity list -->

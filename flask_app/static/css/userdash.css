@@ -94,7 +94,17 @@ tr {
     border: 3px solid green;
     border-radius: 5px;
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-between; */
+    flex-direction: column;
+}
+
+.friend_box {
+    margin-left: 5%;
+    height:200px;
+    overflow-y:scroll;
+    overflow-x: hidden;
+    padding: 1%;
+    background-color:#FFFFF5;
 }
 
 .find_friend, .add_activity{
@@ -138,7 +148,6 @@ tr {
     overflow-x: hidden;
     padding: 1%;
     background-color:#FFFFF5;
-
 }
 
 .link {
