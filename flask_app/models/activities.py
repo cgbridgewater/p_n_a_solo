@@ -217,7 +217,7 @@ class Activity:
         SELECT * FROM users AS creator
         JOIN activities ON creator.id = activities.user_id
         LEFT JOIN join_activity ON activities.id = activity_id
-        WHERE date > date_sub(CURRENT_DATE, interval 2 day) AND join_activity.user_id = %(id)s AND creator.id != %(id)s ORDER BY date ASC;
+        WHERE date > DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND join_activity.user_id = %(id)s AND creator.id != %(id)s ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query, data)
         pprint(results)
@@ -253,7 +253,7 @@ class Activity:
             users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu
             FROM activities
             JOIN users on users.id = activities.user_id
-            WHERE date > date_sub(CURRENT_DATE, interval 2 day);
+            WHERE date > DATE_SUB(CURDATE(), INTERVAL 1 DAY) ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query)
         pprint(results)
