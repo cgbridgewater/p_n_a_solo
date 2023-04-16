@@ -7,6 +7,7 @@ from flask_app.models.activities import Activity
 
 ###  ACTIVITY DASH BOARD
 @app.route('/getoutside')
+@app.route('/getoutside/')
 def activity_dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"
