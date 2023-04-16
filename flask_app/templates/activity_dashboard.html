@@ -44,16 +44,15 @@
             <!-- main wrapper -->
             <div class="wrapper">
                 <!-- top row text -->
-                    <h4 class="green">See what your friends are up to!</h4>
-                <!-- bottom row text with select sort -->
                 <div class="flex">
-                    <h6>(click on activities below to view details)</h6>
+                    <h4 class="green">See what your friends are up to!</h4>
                     <div class="filter-post" >
                         <select name="filter" id="filter" onchange="searchUser()">
                             <option value="">--Sort By Activity--</option>
                             <option value="Climbing">Climbing</option>
                             <option value="Cycling">Cycling</option>
                             <option value="Mtn. Biking">Mtn. Biking</option>
+                            <option value="Disc Golfing">Disc Golfing</option>
                             <option value="Golfing">Golfing</option>
                             <option value="Hiking">Hiking</option>
                             <option value="Paddling">Paddling</option>
@@ -66,6 +65,8 @@
                         </select>
                     </div>
                 </div>
+                <!-- bottom row text with select sort -->
+                    <h6>(click on activities below to view details)</h6>
                 <!-- table -->
                 <table id="userTable" class="activity_table table table-hover border border-3 border-success">
                     <tbody>

@@ -66,14 +66,13 @@ def delete_user_route():
     return redirect('/logout') 
 
 
-### GET ATHLETE BY ID                 WHY DOESNT THE SINGLE METHOD WORK???
+### GET ATHLETE BY ID
 @app.route('/getoutside/athlete/<int:id>')
 def get_user_by_id(id):
     data = {
     "id" : id
     }
     return render_template("user_one_view.html", user = User.get_user_by_id(data),activities = Activity.get_all_activities())
-    # return render_template("user_one_view.html", user = User.get_user_by_id_with_activities(data))
 
 
 ### FOLLOW FRIEND 

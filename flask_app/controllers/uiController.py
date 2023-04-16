@@ -60,7 +60,6 @@ def login():
         flash("Invalid Email/Password", "login")
         return redirect("/getoutside/login")
     if not User.login_validation_check(request.form):
-    # if there are errors:
         return redirect('/getoutside/login')
     session["user_id"] = user_in_db.id
     session.pop("email2", None)
