@@ -12,7 +12,6 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body class="bg-secondary bg-gradient bg-opacity-10">
-
     <!-- logo bar -->
     <div>
         <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
@@ -41,34 +40,48 @@
                 <h6 class="time">It's time to</h6>
                 <h2 class="outside">Get OUTSIDE!</h2>    
             </div>
-            <!-- <a href="/logout" class="profile_button btn btn-danger border-1 border-dark text-decoration-none text-light">LOG OFF AND GET OUTSIDE</a> -->
             <!-- end welcome title -->
             <!-- main wrapper -->
             <div class="wrapper">
-                <!-- top row -->
-                <!-- <div class="flex"> -->
+                <!-- top row text -->
                     <h4 class="green">See what your friends are up to!</h4>
-                    <!-- <a class="btn btn-primary m-1 p-1 opacity-75 rounded-2 border-2 border-dark "  href="/getoutside/athlete"  role="button">VIEW PROFILE</a> -->
-                <!-- </div> -->
-                <!-- bottom row -->
-                <!-- <div class="flex"> -->
-                    <h6>(click on activities to view details)</h6>
-                    <!-- <a class="btn btn-success m-1 p-1 opacity-75 rounded-2 border-2 border-dark "  href="/getoutside/friends"   role="button">FIND FRIENDS</a> -->
-                <!-- </div> -->
+                <!-- bottom row text with select sort -->
+                <div class="flex">
+                    <h6>(click on activities below to view details)</h6>
+                    <div class="filter-post" >
+                        <select name="filter" id="filter" onchange="searchUser()">
+                            <option value="">--Sort By Activity--</option>
+                            <option value="Climbing">Climbing</option>
+                            <option value="Cycling">Cycling</option>
+                            <option value="Mtn. Biking">Mtn. Biking</option>
+                            <option value="Golfing">Golfing</option>
+                            <option value="Hiking">Hiking</option>
+                            <option value="Paddling">Paddling</option>
+                            <option value="Rowing">Rowing</option>
+                            <option value="Running">Running</option>
+                            <option value="Skiing">Skiing</option>
+                            <option value="Snowboarding">Snowboarding</option>
+                            <option value="Snowshoeing">Snowshoeing</option>
+                            <option value="Swimming">Swimming</option>
+                        </select>
+                    </div>
+                </div>
                 <!-- table -->
-                <table class="activity_table table table-hover border border-3 border-success">
-                    <tr>
-                    <!-- loop through activities -->
-                    {% for activity in activities %}
-                    <!-- filter logged in user -->
-                    {% if session.user_id != activity.creator.id %}
-                        <!-- display data -->
-                        <td>   
-                            <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
-                        </td> 
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
+                <table id="userTable" class="activity_table table table-hover border border-3 border-success">
+                    <tbody>
+                        <tr>
+                        <!-- loop through activities -->
+                        {% for activity in activities %}
+                        <!-- filter logged in user -->
+                        {% if session.user_id != activity.creator.id %}
+                            <!-- display data -->
+                            <td>   
+                                <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                            </td> 
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
                 </table>
                 <!-- Table END -->
             </div>
@@ -76,5 +89,6 @@
         <!-- End Contend Wrapper -->
     </main>
     <!-- End Main Wrapper -->
+    <script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
 </body>
 </html>
