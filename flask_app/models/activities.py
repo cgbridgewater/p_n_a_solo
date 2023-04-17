@@ -206,7 +206,6 @@ class Activity:
         connectToMySQL('test_app').query_db(query,data)
 
 
-
     ### DELETE ACTIVITY BY ID   (activitiesController)
     @classmethod
     def delete_activity_by_id(cls,data):
@@ -242,5 +241,3 @@ class Activity:
             })
             all_attendees.append(one_attendee)
         return all_attendees
-
-
