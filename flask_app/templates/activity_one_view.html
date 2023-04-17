@@ -12,7 +12,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
-<body class="bg-secondary bg-gradient bg-opacity-10">
+<body>
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
@@ -153,28 +153,28 @@
                     {% endfor %}
                 </div>
                 <!-- end list of attendees -->
-                <hr hidden>
+                <!-- <hr hidden> -->
                 <!-- comment section -->
-                <div hidden class="comments">
-                    <h4 class="green">Comments:</h4> 
+                <!-- <div hidden class="comments">
+                    <h4 class="green">Comments:</h4>  -->
                     <!-- comment form -->
-                    <form action="#">
+                    <!-- <form action="#">
                         <div class="form_control">
                             <input class="input" type="text" name="text" placeholder="Add Comment">
                             <input type="hidden" name="commenter" value="{{user.first_name}} {{user.last_name}}">
                             <input type="hidden" name="activity_id" value="activity.id">
                             <button class="submit btn btn-success border-2 border-dark p-0" type="submit">COMMENT</button>
                         </div>
-                    </form>
+                    </form> -->
                     <!-- comment results -->
-                    <div class="activity_links">
+                    <!-- <div class="activity_links">
                         <p>Coming Soon!!</p>
                         {% for comment in activity.comments %}
                         <h6>{{comment.text}}</h6>
                         <h6>{{comment.commenter}}</h6>
                         {% endfor %}
                     </div>
-                </div>
+                </div> -->
                 <!-- comment section -->
             </div>
             <!-- End Right Box -->
