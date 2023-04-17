@@ -100,7 +100,7 @@ def view_one_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id_with_attendees(data))
+    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id_with_attendees(data), user = User.get_user_by_id(user))
 
 
 ### ATTEND ACTIVITY ROUTE WITH HOMEPAGE RETURN
