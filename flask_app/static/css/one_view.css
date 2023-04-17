@@ -15,7 +15,6 @@
     color: green;
     font-weight: 600;
     min-width: 350px;
-    margin:1% 0;
 }
 
 .green {
@@ -80,9 +79,8 @@
 }
 
 .activity_links {
-    margin-top: 2%;
     margin-left: 5%;
-    height:200px;
+    height:300px;
     overflow-y:scroll;
     overflow-x: hidden;
     padding: 2%;
@@ -105,17 +103,27 @@ iframe {
     border-radius: 5px;
 }
 
-/* .image_box {
-    display: flex;
-    justify-content: center;
-} */
-
 .image {
     aspect-ratio:1/1;
     max-height: 300px ;
     margin: 3% auto;
     border: 2px solid green; 
     border-radius: 5px;
+}
+
+.form_control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input {
+    width: 60%;
+    color: green;
+}
+
+.submit { 
+    width: 35%;
 }
 
 main {

@@ -64,7 +64,6 @@
                 <!-- bottom of details section -->
                 <div class="bottom">
                     <!-- image container of all images by sport -->
-
                     <div class="image_box"> 
                         <!-- Activities image Container -->
                         {% if activity.activity == "Climbing" %}
@@ -135,6 +134,7 @@
                             {%endif%}
                     {%- endfor %}        
                 </div>
+                <!-- list of attendees -->
                 <div class="activity_links">
                 {% for attendee in activity.attenders %}
                     {% if attendee.id == session.user_id %}
@@ -152,13 +152,30 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <!-- <div class="comments">
+                <!-- end list of attendees -->
+                <hr hidden>
+                <!-- comment section -->
+                <div hidden class="comments">
                     <h4 class="green">Comments:</h4> 
+                    <!-- comment form -->
+                    <form action="#">
+                        <div class="form_control">
+                            <input class="input" type="text" name="text" placeholder="Add Comment">
+                            <input type="hidden" name="commenter" value="{{user.first_name}} {{user.last_name}}">
+                            <input type="hidden" name="activity_id" value="activity.id">
+                            <button class="submit btn btn-success border-2 border-dark p-0" type="submit">COMMENT</button>
+                        </div>
+                    </form>
+                    <!-- comment results -->
                     <div class="activity_links">
-                        <p>comments go here!!!</p>
+                        <p>Coming Soon!!</p>
+                        {% for comment in activity.comments %}
+                        <h6>{{comment.text}}</h6>
+                        <h6>{{comment.commenter}}</h6>
+                        {% endfor %}
                     </div>
                 </div>
-                -->
+                <!-- comment section -->
             </div>
             <!-- End Right Box -->
         </div>
