@@ -134,7 +134,6 @@ class User:
         query = """
         SELECT * 
         FROM users 
-
         WHERE id = %(id)s;
         """
         result = connectToMySQL('test_app').query_db(query,data)
@@ -231,16 +230,12 @@ class User:
     
 
 
-    ############################################################# cut line ##################################################################
-
-    # ### Search VALIDATIONS TESTING
-#     @staticmethod
-#     def user_search_validation(user):
-#         is_valid = True # we assume this is true
-#         if len(user['first_name']) < 2: ### password length check
-#             flash("First name must be at least 2 charactors long.", "update")
-#             is_valid = False
-#         if len(user['last_name']) < 2: ### password length check
-#             flash("Last name must be at least 2 charactors long.", "update")
-#             is_valid = False
-#         return is_valid ### if you make it this far, is good to go!
+### UPDATE USER BY ID (usersController)
+    @classmethod
+    def update_user_image(cls,data):
+        query = """
+        UPDATE users 
+        SET image_file = %(image_file)s
+        WHERE id = %(id)s;
+        """
+        return connectToMySQL('test_app').query_db(query,data)

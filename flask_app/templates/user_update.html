@@ -84,7 +84,8 @@
         </form>
         <!-- end form -->
 
-        <!-- <form  class="border border-2 border-success rounded rounded-2 w-25 m-auto mt-5 p-3 bg-gradient bg-dark bg-opacity-10" action="/getoutside/addimage" method="POST" enctype="multipart/form-data">
+        <form action="/getoutside/addimage" method="POST" enctype="multipart/form-data" class="form_container" >
+            <h3 class="title_text">Add a profile image</h3>
             <p>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -96,14 +97,15 @@
                     {% endif %}
                 {% endwith %}
             </p>
-            <input type="file" name="file" autocomplete="off" required class="form-control">
+            <label class="custom_file_label" for="image">Select Image-</label>
+            <input oninput="filesize(this);" type="file" class="custom_file_input" name="image" id="image">
             <div class="text-center m-1">
-
-                <input class="btn btn-sm bg-warning border border-1 border-dark" type="submit" value="Add Image">
-                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark" role="button">Return To Profile</a>
+                <input class="btn btn-sm bg-primary border border-1 border-dark text-light " type="submit" value="Add Image">
+                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark text-light" role="button">CANCEL</a>
             </div>
-        </form> -->
+        </form>
     </main>
 
+    <script src="{{ url_for('static', filename='js/image.js') }}"></script>
 </body>
 </html>
