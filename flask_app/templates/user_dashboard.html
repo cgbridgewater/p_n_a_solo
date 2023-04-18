@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{user.first_name.upper()}}'s profile</title>
+    <title>{{user.first_name.capitalize()}}'s profile</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -37,7 +37,7 @@
             <!-- user image/name box -->
             <div class="image_box">
                 <!-- user name -->
-                <h1 class="user">{{user.first_name}}'s profile</h1>
+                <h1 class="user">{{user.first_name.capitalize()}}'s profile</h1>
                 <!--  Profile Image Container -->
                 <div class="image">
                     <img class="profile_img" src="../static/images/{{user.image_file}}" alt="{{user.image_file}}">
@@ -54,7 +54,7 @@
                     <tbody>
                     <tr>
                         <td><h4>Name:</h4></td>
-                        <td><h4>{{ user.first_name }} {{ user.last_name }}</h4></td>
+                        <td><h4>{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h4></td>
                     </tr>
                     <tr>
                         <td><h4>Email:</h4></td>
@@ -80,7 +80,7 @@
                         {% for follower in followers %}
                         <ul>
                             <h5>
-                                <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
+                                <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name.capitalize()}} {{follower.friend.last_name.capitalize()}}</a>
                             </h5>
                         </ul>
                         {% endfor %}
