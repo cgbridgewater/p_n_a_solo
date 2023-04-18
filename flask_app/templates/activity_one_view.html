@@ -36,7 +36,7 @@
         <!-- end hamburger nav -->
             <!-- page title -->
         <div class="user">
-            <h1 class="green">Get OUTSIDE with {{activity.creator.first_name}} and go {{activity.activity}}!</h1>
+            <h1 class="green">Get OUTSIDE with {{activity.creator.first_name.capitalize()}} and go {{activity.activity}}!</h1>
         </div>
         <!-- Activities Container -->
         <div class="activity_container">
@@ -139,42 +139,53 @@
                 {% for attendee in activity.attenders %}
                     {% if attendee.id == session.user_id %}
                     <div class="flex">
-                        <h5 class="green">{{attendee.first_name}} {{attendee.last_name}}</h5>
+                        <h5 class="green">{{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}}</h5>
                         <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light"  href="/getoutside/activity/{{activity.id}}/unjoin"   role="button">PASS</a>
                     </div>
                     {% else %}
                         {% if attendee.first_name == None %}
                         {%else%}
                             <p>
-                                <a class="green2" href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name}} {{attendee.last_name}} </a>
+                                <a class="green2" href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}} </a>
                             </p>    
                         {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
                 <!-- end list of attendees -->
-                <!-- <hr hidden> -->
+                <hr class="spacer">
                 <!-- comment section -->
-                <!-- <div hidden class="comments">
-                    <h4 class="green">Comments:</h4>  -->
+                <div class="comments">
+                    <h4 class="green">Comments:</h4> 
+                    <!-- validation error return -->
+                         {% with messages = get_flashed_messages(category_filter=["comment"]) %}
+                            <!-- declare a variable called messages -->
+                            {% if messages %}
+                                <!-- check if there are any messages -->
+                                {% for message in messages %}
+                                <!-- loop through the messages -->
+                                    <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
                     <!-- comment form -->
-                    <!-- <form action="#">
+                    <form action="/getoutside/activities/{{activity.id}}/comment" method="POST">
                         <div class="form_control">
                             <input class="input" type="text" name="text" placeholder="Add Comment">
                             <input type="hidden" name="commenter" value="{{user.first_name}} {{user.last_name}}">
                             <input type="hidden" name="activity_id" value="activity.id">
                             <button class="submit btn btn-success border-2 border-dark p-0" type="submit">COMMENT</button>
                         </div>
-                    </form> -->
+                    </form>
                     <!-- comment results -->
-                    <!-- <div class="activity_links">
-                        <p>Coming Soon!!</p>
-                        {% for comment in activity.comments %}
-                        <h6>{{comment.text}}</h6>
-                        <h6>{{comment.commenter}}</h6>
+                    <div class="activity_links">
+                        {% for comment in comments %}
+                        <h6 class="comment_text">{{comment.text}}</h6>
+                        <h6 class="commenter_data">{{comment.commenter.capitalize()}} on {{comment.created_at.strftime("%B %e, %Y")}}</h6>
+                        <hr class="spacer2">
                         {% endfor %}
                     </div>
-                </div> -->
+                </div>
                 <!-- comment section -->
             </div>
             <!-- End Right Box -->

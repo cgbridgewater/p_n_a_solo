@@ -77,7 +77,7 @@
                         {% if session.user_id != activity.creator.id %}
                             <!-- display data -->
                             <td>   
-                                <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                                <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name.capitalize()}} {{activity.creator.last_name.capitalize()}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
                             </td> 
                         </tr>
                         {% endif %}

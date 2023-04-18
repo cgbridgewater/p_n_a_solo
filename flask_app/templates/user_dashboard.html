@@ -128,7 +128,7 @@
                         <!-- filter for only logged in user -->
                         <!-- display data -->
                             <h5>
-                                <a class="link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                                <a class="link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name.capitalize()}} {{a.creator.last_name.capitalize()}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
                             </h5>
                     {% endfor %}
                 </div>
