@@ -2,6 +2,7 @@ from pprint import pprint
 from flask_app import app
 from flask import render_template, redirect, session, request
 from flask_app.models.users import User
+from flask_app.models.comments import Comment
 from flask_app.models.activities import Activity
 
 
@@ -100,7 +101,7 @@ def view_one_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id_with_attendees(data), user = User.get_user_by_id(user))
+    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id_with_attendees(data), user = User.get_user_by_id(user), comments = Comment.get_comments_by_activity_id(data) )
 
 
 ### ATTEND ACTIVITY ROUTE WITH HOMEPAGE RETURN
