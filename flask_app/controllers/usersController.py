@@ -132,12 +132,7 @@ def allowed_image(filename):
         return True
     else:
         return False
-    
-# def allowed_image_filesize(filesize):
-#     if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
-#         return True
-#     else:
-#         return False
+
 
 @app.route("/getoutside/addimage", methods=['POST'])
 def upload_image():
