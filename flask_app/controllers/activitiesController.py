@@ -3,8 +3,6 @@ from flask import render_template, redirect, session, request
 from flask_app.models.users import User
 from flask_app.models.comments import Comment
 from flask_app.models.activities import Activity
-from dotenv import load_dotenv
-load_dotenv()
 import os
 
 
