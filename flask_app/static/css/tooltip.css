@@ -1,0 +1,91 @@
+/* TOOL TIPS CSS */
+
+.tool-tip {
+    font-size: 12px;
+    padding: 2px 0px;
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.tool-tip::after {
+    background-color: #FFFFF5;
+    border:2px solid green;
+    border-radius: 5px;
+    color: green;
+    content: attr(data-tooltip-title) " ";
+    font-weight: 700;
+    min-width: 100px;
+    padding: 2px 0px;
+    text-align: center;
+    text-transform: none;
+    text-transform: uppercase;
+}
+
+.tool-tip::before {
+    width: 0;
+    height: 0;
+    content: "";
+}
+
+.tool-tip::before,
+.tool-tip::after {
+    position: absolute;
+    transition: opacity 250ms ease 0ms, transform 250ms ease 0ms;
+    transform-style: preserve-3d;
+    opacity: 0;
+    z-index: -1;
+}
+
+.tool-tip[data-tooltip-position="top"]::after,
+.tool-tip[data-tooltip-position="bottom"]::after {
+    left: 50%;
+}
+
+.tool-tip[data-tooltip-position="top"]::after {
+    transform: translate3d(-50%, 10px, 0);
+}
+
+.tool-tip[data-tooltip-position="bottom"]::after {
+    transform: translate3d(-50%, -10px, 0);
+}
+
+.tool-tip[data-tooltip-position="top"]::after {
+    bottom: calc(100% + 10px);
+}
+
+.tool-tip[data-tooltip-position="bottom"]::after {
+    top: calc(100% + 10px);
+}
+
+
+/* Pointers */
+
+.tool-tip[data-tooltip-position="top"]::before,
+.tool-tip[data-tooltip-position="bottom"]::before {
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    left: 50%;
+}
+
+.tool-tip[data-tooltip-position="top"]::before {
+    transform: translate3d(-50%, 10px, 0);
+}
+
+.tool-tip[data-tooltip-position="bottom"]::before {
+    transform: translate3d(-50%, -10px, 0);
+}
+
+.tool-tip:hover::before,
+.tool-tip:hover::after {
+    opacity: 1;
+    z-index: 100;
+}
+
+.tool-tip[data-tooltip-position="top"]:hover::before,
+.tool-tip[data-tooltip-position="bottom"]:hover::before,
+.tool-tip[data-tooltip-position="top"]:hover::after,
+.tool-tip[data-tooltip-position="bottom"]:hover::after {
+    transform: translate3d(-50%, 0px, 0);
+}

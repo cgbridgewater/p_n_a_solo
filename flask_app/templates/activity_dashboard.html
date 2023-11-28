@@ -6,49 +6,142 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get OUTSIDE!</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/activityform.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tooltip.css') }}">
+    
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-    <!-- logo bar -->
-    <div>
-        <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-    </div> 
     <!-- main wrapper -->
     <main>
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+        <!-- logo bar -->
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
-                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li>                        
+                    <a class="menu__item" href="#"data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Create New Activity
+                    </a>
+                </li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
         <!-- content wrapper -->
         <div class="content">
             <!-- welcome title -->
             <div class="welcome">
                 <h1>Welcome {{user.first_name}},&nbsp; </h1>
-                <h6 class="time">It's time to</h6>
-                <h2 class="outside">Get OUTSIDE!</h2>    
+                <div class="time-position">
+                    <h6 class="time">It's time to</h6>
+                    <h2 class="outside">Get OUTSIDE!</h2>    
+                </div>
             </div>
             <!-- end welcome title -->
             <!-- main wrapper -->
             <div class="wrapper">
                 <!-- top row text -->
-                <div class="flex">
-                    <h4 class="green">See what your friends are up to!</h4>
-                    <div class="filter-post" >
-                        <select name="filter" id="filter" onchange="searchUser()">
-                            <option value="">--Sort By Activity--</option>
+                <div class="flex2">
+                    <h4 class="text_green">See what everyone is up to!</h4>
+                    <!-- Button trigger modal -->
+                        <button type="button" class="create_button green" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Create New Activity
+                        </button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- <div class="modal-header">
+                            </div> -->
+                            <div class="modal-body">
+                                <div class="d-flex justify-content-between align-content-center">
+                                    <h1 class="modal-title" id="exampleModalLabel">Create An Activity</h1>
+                                    <a class="close" data-bs-dismiss="modal"aria-label="Close"><i class="button_close fa-regular fa-circle-xmark fa-2xl"></i></a>
+                                </div>
+                                <!-- form start -->
+                                <form action='/getoutside/activities/new' method="POST">
+                                    <!-- Input 1 -->
+                                    <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                                    <div class="form_control">
+                                        <label class="label" for="activity">Activity Type:</label>
+                                        <!-- dropdown menu -->
+                                        <select class="input form-control shadow-none" id="activity" name="activity">
+                                            <option value="">--Select Activity--</option>
+                                            {% if session['activity'] is defined %}
+                                            <option value="{{session['activity']}}" hidden selected >{{session['activity']}}</option>
+                                            {% endif%}
+                                            <option value="to the Gym">Gym</option>
+                                            <option value="Climbing">Climbing</option>
+                                            <option value="Cycling">Cycling</option>
+                                            <option value="Mtn. Biking">Mtn. Biking</option>
+                                            <option value="Disc Golfing">Disc Golfing</option>
+                                            <option value="Golfing">Golfing</option>
+                                            <option value="Hiking">Hiking</option>
+                                            <option value="Paddling">Paddling</option>
+                                            <option value="Rowing">Rowing</option>
+                                            <option value="Running">Running</option>
+                                            <option value="Skiing">Skiing</option>
+                                            <option value="Snowboarding">Snowboarding</option>
+                                            <option value="Snowshoeing">Snowshoeing</option>
+                                            <option value="Swimming">Swimming</option>
+                                        </select>
+                                        <!-- end dropdown menu -->
+                                    </div>
+                                    <!-- End Input 1 -->
+                                    <!-- Input 2 -->
+                                    <div class="form_control">
+                                        <label class="label" for="location">Activity Location:</label>
+                                        <input class="input form-control shadow-none" type="text" id="location" name="location" value="{{session['location']}}">
+                                    </div>
+                                    <!-- End Input 2 -->
+                                    <!-- Input  -->
+                                    <div class="form_control">
+                                        <label class="label" for="date">Date:</label>
+                                        <input class="input form-control shadow-none" type="date" id="date" name="date" value="{{session['date']}}">
+                                    </div>
+                                    <!-- Buttons -->
+                                    <div class="buttons">
+                                        <button type="button" class="button brown" data-bs-dismiss="modal">CANCEL</button>
+                                        <button type="submit" value="Login" class="button green">SUBMIT</button>
+                                    </div>
+                                    <!-- End buttons -->
+                                </form>
+                                <!--form END -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MODAL -->
+                <!-- bottom row text with select sort -->
+                <div class="flex mb-1">
+                    <h6 class="mt-1">(click activity to view details)</h6>
+                    <div class="my-1" >
+                        <select class="input form-control shadow-none" name="filter" id="filter" onchange="searchUser()">
+                            <option value="">--Filter By Activity--</option>
                             <option value="Climbing">Climbing</option>
                             <option value="Cycling">Cycling</option>
                             <option value="Mtn. Biking">Mtn. Biking</option>
@@ -65,23 +158,61 @@
                         </select>
                     </div>
                 </div>
-                <!-- bottom row text with select sort -->
-                    <h6>(click on activities below to view details)</h6>
                 <!-- table -->
                 <table id="userTable" class="activity_table table table-hover border border-3 border-success">
                     <tbody>
-                        <tr>
                         <!-- loop through activities -->
                         {% for activity in activities %}
                         <!-- filter logged in user -->
                         {% if session.user_id != activity.creator.id %}
+                            <!-- set counter -->
+                            {% set ns = namespace(counter =0) %}
+                            <!-- loop through to check event joined matches -->
+                            {% for event in attending %}
+                                {% if activity.id == event.id %}
+                                    {% set ns.counter = ns.counter +1 %}
+                                {% endif%}
+                            {% endfor %}
+                            <!-- end loop -->
                             <!-- display data -->
-                            <td>   
-                                <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name.capitalize()}} {{activity.creator.last_name.capitalize()}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
-                            </td> 
-                        </tr>
-                        {% endif %}
+                                {% if ns.counter == 1 %}
+                                <tr>
+                                    <td>   
+                                        <a class="activity_link" href="/getoutside/activity/{{activity.id}}">{{activity.creator.first_name.capitalize()}} {{activity.creator.last_name.capitalize()}} is going {{activity.activity}} at {{activity.location.title()}}. <br>On {{activity.date.strftime("%B %e, %Y")}} </a>
+                                    </td>
+                                    <td>
+                                        <span class="tool-tip" data-tooltip-title="Leave Activity" data-tooltip-position="top">
+                                            <a class="unjoin3_button h2" href="/getoutside/activity/{{activity.id}}/un-join"><i class="fa-solid fa-square-xmark align-text-top" id="unjoin"></i></a>
+                                        </span>
+                                    </td> 
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td>
+                                        <a class="activity_link" href="/getoutside/activity/{{activity.id}}">{{activity.creator.first_name.capitalize()}} {{activity.creator.last_name.capitalize()}} is going {{activity.activity}} at {{activity.location.title()}}. <br>On {{activity.date.strftime("%B %e, %Y")}} </a>
+                                    </td>
+                                    <td>
+                                        <span class="tool-tip" data-tooltip-title="Join Activity" data-tooltip-position="top">
+                                            <a class="join_button h3" href="/getoutside/activity/{{activity.id}}/join3"><i class="fa-solid fa-arrow-up-right-from-square align-text-top" id="join"></i></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endif%}
+                            {% else %}
+                            <!-- display data -->
+                            <tr>
+                                <td>   
+                                    <a class="activity_link" href="/getoutside/activity/{{activity.id}}"><b>You</b>  are going {{activity.activity}} at {{activity.location.title()}}. <br>On {{activity.date.strftime("%B %e, %Y")}} </a>
+                                </td>
+                                <td>
+                                    <span class="tool-tip" data-tooltip-title="Edit Activity" data-tooltip-position="top">
+                                        <a class="edit_button h3" href="/getoutside/activity/{{activity.id}}/edit"><i class="fa-solid fa-pen-to-square align-text-top" id="edit"></i></a>
+                                    </span>
+                                </td> 
+                            </tr>
+                                {% endif %}
                         {% endfor %}
+                        </tr>
                     </tbody>
                 </table>
                 <!-- Table END -->
@@ -90,6 +221,8 @@
         <!-- End Contend Wrapper -->
     </main>
     <!-- End Main Wrapper -->
-    <script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/filter_script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
 </body>
 </html>

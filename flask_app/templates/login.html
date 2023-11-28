@@ -6,66 +6,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get OUTSIDE Log-In</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <!-- OUTSIDE Logo -->
+    <header>
+        <h1 class="header_text">Get OUTSIDE</h1>
+    </header>
+
+
+    <ul class="slideshow">
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+
+
+
+
     <!-- main content box -->
-    <main>
-        <!-- OUTSIDE Logo -->
-        <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
-        <!-- background image container -->
-        <div class="background">
-            <!-- login container -->
-            <div class="login_container">
-                <!-- Login Form Wrapper -->
-                <div class="login">
-                    <!-- header -->
-                    <h3 class="title">Login to Get OUTSIDE</h3>
-                    <!-- validation error return -->
-                    {% with messages = get_flashed_messages(category_filter=["login"]) %}
-                        <!-- declare a variable called messages -->
-                        {% if messages %}
-                            <!-- check if there are any messages -->
-                            {% for message in messages %}
-                            <!-- loop through the messages -->
-                                <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->   
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                    <!-- form start -->
-                    <form action='/getoutside/login' method="POST">
-                        <!-- Email Section -->
-                        <div class="text-start">
-                            <label for="email">Email:</label>
-                        </div>
-                        <div>
-                            <input type="text" name="email" class="input form-control bg-light" value="{{session['email2']}}">
-                        </div>
-                        <!-- End Email Section -->
-                        <!-- Password Section -->
-                        <div class="text-start">
-                            <label for="password">Password:</label>
-                        </div>
-                        <div>
-                            <input type="password" name="password" class="input form-control bg-light">
-                        </div>
-                        <!-- Password Section -->
-                        <!-- submit and signup link -->
-                        <div class="flex">
-                            <button type="submit" value="Login" class="input mt-1 text-light bg-success bg-gradient rounded-2">Get OUTSIDE</button>
-                            <p>Not a member yet? <a href="/getoutside/register">Sign Up!</a></p>
-                        <!-- End submit and signup link -->
-                        </div>
-                    </form>
-                    <!--form END -->
-                </div>
-                <!-- end login wrapper  -->
+        <div class="login_container">
+            <!-- Login Form Wrapper -->
+            <div class="login">
+                <!-- header -->
+                <h3 class="page_title">Login to Get OUTSIDE</h3>
+                <!-- validation error return -->
+                {% with messages = get_flashed_messages(category_filter=["login"]) %}
+                    <!-- declare a variable called messages -->
+                    {% if messages %}
+                        <!-- check if there are any messages -->
+                        {% for message in messages %}
+                        <!-- loop through the messages -->
+                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->   
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <!-- form start -->
+                <form action='/getoutside/login' method="POST">
+                    <!-- Email Section -->
+                    <div class="text-start">
+                        <label for="email">Email:</label>
+                    </div>
+                    <div>
+                        <input autocomplete="email" type="text" name="email" class="input form-control shadow-none my-2" value="{{session['email2']}}" autofocus>
+                    </div>
+                    <!-- End Email Section -->
+                    <!-- Password Section -->
+                    <div class="text-start">
+                        <label for="password">Password:</label>
+                    </div>
+                    <div>
+                        <input autocomplete="none" type="password" name="password" class="input form-control shadow-none my-2">
+                    </div>
+                    <!-- Password Section -->
+                    <!-- submit -->
+                    <div class="button_container">
+                        <button type="submit" value="Login" class="button green">Get OUTSIDE</button>
+                        <!-- End submit -->
+                    </div>
+                </form>
+                <!-- signup link -->
+                <!--form END -->
+                <p class="sign_in">Not a member? <a class="sign_in_link" href="/getoutside/toregister">Sign Up!</a></p>
+                <!-- End signup link -->
             </div>
-            <!--end login container  -->
+            <!-- end login wrapper  -->
         </div>
-        <!-- end background container -->
-    </main>
+        <!--end login container  -->
 </body>
 </html>

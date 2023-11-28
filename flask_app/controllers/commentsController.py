@@ -1,4 +1,3 @@
-from pprint import pprint
 from flask_app import app
 from flask import redirect, session, request
 from flask_app.models.comments import Comment
@@ -17,7 +16,6 @@ def comment_form_action(id):
         "commenter" : request.form["commenter"],
         }
     if not Comment.comment_validation_check(data):
-        return redirect(f'/getoutside/activity/{id}') 
+        return redirect(f'/getoutside/activity/{id}#comments') 
     Comment.create_comment(data)
-    pprint(data)
-    return redirect(f'/getoutside/activity/{id}') 
+    return redirect(f'/getoutside/activity/{id}#comments')

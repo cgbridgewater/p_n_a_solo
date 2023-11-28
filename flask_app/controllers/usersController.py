@@ -2,13 +2,14 @@ from flask_app import app
 from flask import render_template, request, redirect, session, flash, url_for
 from flask_app.models.users import User
 from flask_app.models.activities import Activity
+from flask_app.models.comments import Comment
 import os
 from werkzeug.utils import secure_filename
 
 
 
 ### ATHLETE DASHBOARD
-@app.route('/getoutside/athlete')
+@app.route('/getoutside/myprofile')
 def user_dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"
@@ -16,11 +17,11 @@ def user_dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data), followers = User.all_followers(data))
+    return render_template("user_profile.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data), followers = User.all_followers(data), counts = Activity.get_all_activities_by_user_id(data), all_joined = Activity.get_all_events_attending_by_user_with_id(data), comments = Comment.get_all_comments())
 
 
 ### UPDATE ATHLETE FORM (protected)
-@app.route('/getoutside/athlete/update')
+@app.route('/getoutside/myprofile/edit')
 def edit_user_form():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -34,7 +35,7 @@ def edit_user_form():
 
 
 ### ATHLETE UPDATE FORM POST ACTION (protected)
-@app.route('/getoutside/athlete/update', methods =['POST'])
+@app.route('/getoutside/myprofile/edit', methods =['POST'])
 def update_user_form_action():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -48,13 +49,13 @@ def update_user_form_action():
     if session['user_id'] != user_check.id:
         return redirect('/logout')
     if not User.update_validation_check(data):
-        return redirect('/getoutside/athlete/update')
+        return redirect('/getoutside/myprofile/edit')
     User.update_user_by_id(data)
-    return redirect("/getoutside/athlete") 
+    return redirect("/getoutside/myprofile") 
 
 
 ### ATHLETUS DELETUS (protected)
-@app.route('/getoutside/athlete/delete')
+@app.route('/getoutside/myprofile/delete')
 def delete_user_route():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -76,12 +77,15 @@ def get_user_by_id(id):
     data = {
     "id" : id
     }
-    return render_template("user_one_view.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities())
+    logged_user ={
+        'id': session['user_id']
+    }
+    return render_template("user_one_view.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities(), joined = Activity.get_all_events_attending_by_user_with_id(data), followers = User.all_followers(logged_user), counts = Activity.get_all_activities_by_user_id(data), comments = Comment.get_all_comments())
 
 
-### FOLLOW FRIEND 
+### FOLLOW FRIEND /RETURN TO FRIEND SEARCH
 @app.route('/getoutside/athlete/<int:id>/follow')
-def follow_user_return_to_homepage(id):
+def follow_user_return_to_search(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
@@ -89,12 +93,24 @@ def follow_user_return_to_homepage(id):
         'user_id' : session['user_id']
     }
     User.follow_user(data)
-    return redirect("/getoutside/athlete")
+    return redirect("/getoutside/friends")
+
+### FOLLOW FRIEND / RETURN TO USER BY ID
+@app.route('/getoutside/athlete/<int:id>/followbyid')
+def follow_user_return_to_userbyid(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'friend_id' : id,
+        'user_id' : session['user_id']
+    }
+    User.follow_user(data)
+    return redirect(f"/getoutside/athlete/{id}")
 
 
-### UNFOLLOW FRIEND
+### UNFOLLOW FRIEND / RETURN TO FIND FRIEND
 @app.route('/getoutside/athlete/<int:id>/unfollow')
-def unfollow_user(id):
+def unfollow_user_return_to_search(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
@@ -102,7 +118,31 @@ def unfollow_user(id):
         'user_id' : session['user_id']
     }
     User.unfollow_user(data)
-    return redirect("/getoutside")
+    return redirect("/getoutside/friends")
+
+### UNFOLLOW FRIEND / RETURN TO USER BY ID
+@app.route('/getoutside/athlete/<int:id>/unfollowbyid')
+def unfollow_user_return_to_userbyid(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'friend_id' : id,
+        'user_id' : session['user_id']
+    }
+    User.unfollow_user(data)
+    return redirect(f"/getoutside/athlete/{id}")
+
+### UNFOLLOW FRIEND / RETURN TO USER BY ID
+@app.route('/getoutside/athlete/<int:id>/unfollowing')
+def unfollow_user_return_to_profile(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'friend_id' : id,
+        'user_id' : session['user_id']
+    }
+    User.unfollow_user(data)
+    return redirect(f"/getoutside/myprofile")
 
 
 ### FRIEND SEARCH SINGLE PAGE FORM/RESULTS
@@ -114,7 +154,7 @@ def friend_search_page():
     data ={
         'id': session['user_id']
     }
-    return render_template("friends_search.html", allusers = User.get_all_users_excluding_logged_in_user(data)) 
+    return render_template("friends_search.html", allusers = User.get_all_users_excluding_logged_in_user(data), followers = User.all_followers(data)) 
 
 
 ### Image upload below
@@ -144,17 +184,17 @@ def upload_image():
             image = request.files["image"]
             # check that file name is not empty
             if image.filename == '':
-                flash("Image must have a file name")
-                return redirect("/getoutside/athlete/update") 
+                flash("Image must have a file name", "image")
+                return redirect("/getoutside/myprofile/edit") 
             # # check if file size is allowed
             # if not allowed_image_filesize(request.cookies.get("filesize")):
-            #     flash("File exceeded maximum size")
-            #     return redirect("/getoutside/athlete/update")
+            #     flash("File exceeded maximum size", "image")
+            #     return redirect("/getoutside/myprofile/edit")
 
             # check for allowed file extension type
             if not allowed_image(image.filename):
-                flash("That image extension is not allowed")
-                return redirect("/getoutside/athlete/update") 
+                flash("That image extension is not allowed", "image")
+                return redirect("/getoutside/myprofile/edit") 
             # sanitize image
             else:
                 filename = secure_filename(image.filename)
@@ -167,5 +207,5 @@ def upload_image():
             }
             User.update_user_image(data)
             # return to profile page on success
-            return redirect("/getoutside/athlete") 
-    return redirect("/getoutside/athlete/update") 
+            return redirect("/getoutside/myprofile") 
+    return redirect("/getoutside/myprofile/edit") 

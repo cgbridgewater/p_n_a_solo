@@ -18,11 +18,11 @@
     margin-bottom: 1%;
 }
 
-.green {
+.text_green {
     color:green;
     font-weight: 700;
 }
-.green2 {
+.text_green2 {
     color:green;
     font-size:20px;
     font-weight: 700;
@@ -30,20 +30,18 @@
     text-decoration: none;
 }
 
-.black {
-    color:black;
-}
-
-.btn {
-    width: 90px;
-    border-radius: 5px;
+.text_brown {
+    color: #6b0f1a;
+    font-weight: 700;
 }
 
 .activity_container {
+    margin: 10px 0;
     min-width: 360px;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    
 }
 
 .left_box {
@@ -68,6 +66,7 @@
     border: 3px solid green;
     border-radius: 5px;
     box-shadow: 5px 8px 10px rgba(2, 20, 2, 0.5);
+    margin-bottom: 10px;
 }
 
 .flex {
@@ -76,7 +75,11 @@
 }
 
 .buttons {
-        margin-left: 10px;
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    width: 220px;
 }
 
 .activity_links {
@@ -118,15 +121,46 @@ iframe {
     align-items: center;
 }
 
-.input {
+/* .input {
     width: 50%;
-    color: green;
+    color: brown;
+    font-weight: bold;
     border: 1px solid green;
     padding-left: 5px;
+} */
+
+.input, .input:focus, .input:-webkit-autofill,
+.input:-webkit-autofill:hover, 
+.input:-webkit-autofill:focus {
+    border-radius: 5px;
+    padding: 0 5px;
+    width: 50%;
+    color:#6b0f1a;
+    -webkit-text-fill-color: #6b0f1a;
+    -webkit-box-shadow: 0 0 0px 1000px #fffef5 inset;
+    transition: background-color 5000s ease-in-out 0s;
+    font-weight: 700;
+    background-color: #fffef5;
+    border:2px solid rgba(0, 128, 0, .4);
+}
+
+.input:focus, .input:hover {
+    border:2px solid  rgba(0, 128, 0, .9);
+    caret-color: #6b0f1a;
+}
+
+.input::placeholder {
+    opacity: 0.65;
 }
 
 .submit { 
     width: 30%;
+}
+
+.error {
+    font-size: 14px;
+    color:red;
+    font-weight: 700;
 }
 
 .comment_text {
@@ -136,6 +170,7 @@ iframe {
 
 .commenter_data {
     font-size: 12px;
+    color: #6b0f1a;
 }
 
 .spacer {
@@ -151,7 +186,7 @@ iframe {
     border: 1px solid green;
 }
 
-main {
+body {
     min-height: 100vh;
     height:100%;
     width: 100%;

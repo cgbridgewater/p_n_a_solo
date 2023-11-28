@@ -1,0 +1,171 @@
+/* BUTTON STYLE */
+
+.button, .create_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:30px;
+	color: #FFFEF5;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    text-decoration: none;
+    border: none;
+	border-radius: 50px !important;
+    -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+    -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: green;
+    color: white;
+    border: 2px solid green;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: rgba(0, 128, 0, 0.7);
+    cursor: pointer;
+}
+
+
+/* button specific */
+.button {
+    width: 100px !important;  /**/
+    padding: 2px 5px; /**/
+    margin: 4px; /**/
+}
+
+/* create button specific */
+.create_button {
+    width: 180px !important;
+}
+
+.button:active, .create_button:active {
+	-webkit-transform: scale(0.85);
+	-moz-transform: scale(0.85);
+	-ms-transform: scale(0.85);
+	-o-transform: scale(0.85);
+	transform: scale(0.85);
+	background-color: inherit;
+    position: relative;
+    top:3px;
+}
+
+/* Button Colors */
+
+.green:hover, .blue:hover, .brown:hover, .grey:hover {
+    opacity: 95%;
+    color: #fff99f;
+    -webkit-box-shadow:  0.3rem 0.3rem 0.3rem rgba(0, 128, 0, 0.5) , 0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+    -moz-box-shadow:  0.3rem 0.3rem 0.3rem rgba(0, 128, 0, 0.5) , 0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+    box-shadow:  0.3rem 0.3rem 0.3rem rgba(0, 128, 0, 0.5) ,  0em -0.3rem 0em rgba(0, 0, 0, 0.5) inset;
+}
+
+.green, .green:hover {
+    background-color: green;
+}
+
+.brown,.brown:hover  {
+    background-color: #6B0F1A;
+}
+
+.blue, .blue:hover {
+    background-color: blue;
+}
+
+.grey, .grey:hover  {
+    background-color: gray;
+}
+
+.close {
+    position: relative;
+    cursor: pointer;
+}
+
+.button_close {
+    position: relative;
+    bottom: 5px;
+    left: 15px;
+    color: #6B0F1A;
+}
+
+.button_close:hover {
+    color: red;
+}
+
+/* Activities Actions */
+
+.unjoin_button {
+    position: relative;
+    top: 2px;
+    color: #6B0F1A;
+}
+
+.unjoin_button:hover,.unjoin2_button:hover, .unjoin3_button:hover {
+    color: red;
+    text-shadow:  0.2rem 0.2rem .5rem rgba(0, 128, 0, 0.7);
+}
+
+.unjoin_button:active {
+    position: relative;
+    top: 4px;
+}
+
+.unjoin2_button {
+    position: relative;
+    top: 15px;
+    color: #6B0F1A;
+}
+
+.unjoin2_button:active {
+    position: relative;
+    top: 3px;
+}
+
+.unjoin3_button {
+    position: relative;
+    top: 8px;
+    color: #6B0F1A;
+}
+
+.unjoin3_button:active {
+    position: relative;
+    top: 10px;
+}
+
+.join_button {
+    position: relative;
+    top: 12px;
+    color: green;
+}
+
+.join_button:hover {
+    color: darkgreen;
+    text-shadow:  0.2rem 0.2rem .5rem rgba(0, 128, 0, 0.7);
+}
+
+.join_button:active {
+    position: relative;
+    top: 14px;
+}
+
+.edit_button {
+    position: relative;
+    top: 12px;
+    color: blue;
+}
+
+.edit_button:hover {
+    color: darkblue;
+    text-shadow:  0.2rem 0.2rem .5rem rgba(0, 128, 0, 0.7);
+}
+
+.edit_button:active {
+    position: relative;
+    top: 14px;
+}

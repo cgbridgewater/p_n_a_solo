@@ -6,37 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View {{activity.creator.first_name}}'s Activity</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/one_view.css') }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/one_view.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 
 </head>
 <body>
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
-        <div>
-            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside">Home</a></li>
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
-                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
             <!-- page title -->
         <div class="user">
-            <h1 class="green">Get OUTSIDE with {{activity.creator.first_name.capitalize()}} and go {{activity.activity}}!</h1>
+            <h1 class="text_green mt-2">Get OUTSIDE with {{activity.creator.first_name.title()}} and go {{activity.activity}}!</h1>
         </div>
         <!-- Activities Container -->
         <div class="activity_container">
@@ -46,18 +55,26 @@
                 <div class="top">
                     <!-- title and button-->
                     <div class="flex">
-                        <h4 class="green">Details</h4>
+                        <h4 class="text_green">Details</h4>
                         <div class="buttons">
+                            <a class="button green" href="/getoutside/activities" role="button">ACTIVITIES</a>
+                            <a class="button blue" href="/getoutside/myprofile" role="button">PROFILE</a>
                             {% if activity.creator.id == session.user_id %}
-                            <a class="btn btn-secondary rounded-2 m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/edit" role="button">EDIT</a>
-                            <a class="btn btn-danger rounded-2  m-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/delete" role="button">DELETE</a>
+                            <a class="button grey" href="/getoutside/activity/{{activity.id}}/edit" role="button">EDIT</a>
+                            <a class="button brown" href="/getoutside/activity/{{activity.id}}/delete" role="button">DELETE</a>
                             {% endif %}
                         </div>
                     </div>
                     <!-- activity deets -->
-                    <p class="green">What I'm Doing: <span class="black">{{activity.activity}}</span></p>
-                    <p class="green">When: <span class="black">{{activity.date.strftime("%B %e, %Y")}}</span></p>
-                    <p class="green">Where: <span class="black">{{activity.location}}</span></p>
+                    <p class="text_green"><i class="fas fa-info-circle" style="color: #008000;"></i> What I'm Doing: <span class="text_brown">
+                        {% if activity.activity == "to the Gym"%}
+                            Gym Session
+                        {% else %}
+                            {{activity.activity}}
+                        {% endif %}
+                    </span></p>
+                    <p class="text_green"><i class="far fa-calendar-alt" style="color: #008000;"></i> When: <span class="text_brown">{{activity.date.strftime("%B %e, %Y")}}</span></p>
+                    <p class="text_green"><i class="fas fa-map-marked-alt" style="color: #008000;"></i> Where: <span class="text_brown">{{activity.location.title()}}</span></p>
                     <!-- end activity deets -->
                 </div>
                 <!-- end top of details box --> 
@@ -66,8 +83,11 @@
                     <!-- image container of all images by sport -->
                     <div class="image_box"> 
                         <!-- Activities image Container -->
-                        {% if activity.activity == "Climbing" %}
-                        <img class="image" src="https://live.staticflickr.com/65535/52822743399_b4892e348c_z.jpg" alt="Hiking">
+                        {% if activity.activity == "to the Gym" %}
+                        <img class="image" src="https://live.staticflickr.com/65535/53261382110_eb6a3253dd.jpg" alt="Gym">
+
+                        {% elif activity.activity == "Climbing" %}
+                        <img class="image" src="https://live.staticflickr.com/65535/52822743399_b4892e348c_z.jpg" alt="Climbing">
                         
                         {% elif activity.activity == "Cycling" %}
                         <img class="image" src="https://live.staticflickr.com/65535/52823001593_5cc04c8c73.jpg" alt="Cycling">
@@ -76,7 +96,7 @@
                         <img class="image" src="https://live.staticflickr.com/65535/52823001058_1c534afa53_z.jpg" alt="Mtn. Biking">
                         
                         {% elif activity.activity == "Disc Golfing" %}
-                        <img class="image" src="https://live.staticflickr.com/65535/52823097098_9a373cb198_c.jpg" alt="Golfing">
+                        <img class="image" src="https://live.staticflickr.com/65535/52823097098_9a373cb198_c.jpg" alt="Disc Golfing">
                         
                         {% elif activity.activity == "Golfing" %}
                         <img class="image" src="https://live.staticflickr.com/65535/52822564031_4d49b144a0.jpg" alt="Golfing">
@@ -100,7 +120,7 @@
                         <img class="image" src="https://live.staticflickr.com/65535/52823382403_1e4f00cf28_w.jpg" alt="Snowboarding">
                         
                         {% elif activity.activity == "Snowshoeing" %}
-                        <img class="image" src="https://live.staticflickr.com/65535/52822563371_b35e821a4d_z.jpg" alt="Swimming">
+                        <img class="image" src="https://live.staticflickr.com/65535/52822563371_b35e821a4d_z.jpg" alt="SnowShoeing">
                         
                         {% elif activity.activity == "Swimming" %}
                         <img class="image" src="https://live.staticflickr.com/65535/52822742544_2ebc44751f.jpg" alt="Swimming">
@@ -125,12 +145,12 @@
             <div class="left_box">
                 <!-- title and button -->
                 <div class="flex">
-                    <h4 class="green">Who's going:</h4> 
+                    <h4 class="text_green">Who's going:</h4> 
                     <!-- if attenders list is empty make a join button -->
                     {% for attendee in activity.attenders if session.user_id == attendee.id and session.user_id != activity.creator.id -%}
                         {% else %}
                             {% if activity.creator.id != session.user_id %}
-                                <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/join2" role="button">I'M IN!</a>
+                                <a class="button green" href="/getoutside/activity/{{activity.id}}/join2" role="button">I'M IN!</a>
                             {%endif%}
                     {%- endfor %}        
                 </div>
@@ -139,15 +159,15 @@
                 {% for attendee in activity.attenders %}
                     {% if attendee.id == session.user_id %}
                     <div class="flex">
-                        <h5 class="green">{{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}}</h5>
-                        <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light"  href="/getoutside/activity/{{activity.id}}/unjoin"   role="button">PASS</a>
+                        <h5 class="text_green">{{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}}</h5>
+                        <a class="unjoin_button"  href="/getoutside/activity/{{activity.id}}/unjoin"><i class="fa-solid fa-square-xmark fa-xl"></i></a>
                     </div>
                     {% else %}
                         {% if attendee.first_name == None %}
                         {%else%}
-                            <p>
-                                <a class="green2" href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}} </a>
-                            </p>    
+                            <h5>
+                                <a class="text_green2" href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name.capitalize()}} {{attendee.last_name.capitalize()}} </a>
+                            </h5>    
                         {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -155,33 +175,36 @@
                 <!-- end list of attendees -->
                 <hr class="spacer">
                 <!-- comment section -->
-                <div class="comments">
-                    <h4 class="green">Comments:</h4> 
+                <div id="comments" class="comments">
                     <!-- validation error return -->
-                         {% with messages = get_flashed_messages(category_filter=["comment"]) %}
-                            <!-- declare a variable called messages -->
-                            {% if messages %}
-                                <!-- check if there are any messages -->
-                                {% for message in messages %}
-                                <!-- loop through the messages -->
-                                    <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
+                    {% with messages = get_flashed_messages(category_filter=["comment"]) %}
+                        <!-- declare a variable called messages -->
+                        {% if messages %}
+                            <!-- check if there are any messages -->
+                            {% for message in messages %}
+                            <!-- loop through the messages -->
+                            <!-- <p class="error">{{message}}</p>  -->
+                            <h4 class="text_green">Comments: <span class="error">{{message}}</span></h4> <!-- display each message in a paragraph tag -->
+                            {% endfor %}
+                        {% else %}
+                            
+                            <h4 class="text_green">Comments: </h4> 
+                        {% endif %}
+                    {% endwith %}
                     <!-- comment form -->
                     <form action="/getoutside/activities/{{activity.id}}/comment" method="POST">
                         <div class="form_control">
-                            <input class="input" type="text" name="text" placeholder="Add Comment">
-                            <input type="hidden" name="commenter" value="{{user.first_name}} {{user.last_name}}">
+                            <input class="input form-control shadow-none" type="text" name="text" placeholder="Add Comment">
+                            <input type="hidden" name="commenter" value="{{user.first_name.capitalize()}} {{user.last_name.capitalize()}}">
                             <input type="hidden" name="activity_id" value="activity.id">
-                            <button class="submit btn btn-success border-2 border-dark p-0" type="submit">COMMENT</button>
+                            <button class="button green" type="submit">COMMENT</button>
                         </div>
                     </form>
                     <!-- comment results -->
                     <div class="activity_links">
                         {% for comment in comments %}
-                        <h6 class="comment_text">{{comment.text}}</h6>
-                        <h6 class="commenter_data">{{comment.commenter.capitalize()}} on {{comment.created_at.strftime("%B %e, %Y")}}</h6>
+                        <h6 class="comment_text">{{comment.text.capitalize()}}</h6>
+                        <h6 class="commenter_data">{{comment.commenter}} on {{comment.created_at.strftime("%B %e, %Y")}}</h6>
                         <hr class="spacer2">
                         {% endfor %}
                     </div>
@@ -193,4 +216,6 @@
         <!-- end activities container -->
     </main>
 <!-- End Main -->
+<script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

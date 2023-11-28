@@ -5,62 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create A New Activity</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/activityform.css') }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/activityform.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
     <!-- main content box -->
     <main>
-        <!-- Get OUTSIDE Logo -->
-        <div>
-            <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>        
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+    <!-- OUTSIDE Logo -->
+    <header>
+        <h1 class="header_text">Get OUTSIDE</h1>
+    </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside">Home</a></li>
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
         <!-- TOPO Container -->
         <div class="background">
             <!-- Login Form Wrapper -->
             <div class="activity_form">
                 <!-- header -->
                 <h3>Create a new activity</h3>
-                <!-- validation error return -->
-                {% with messages = get_flashed_messages(category_filter=["activity"]) %}
-                    <!-- declare a variable called messages -->
-                    {% if messages %}
-                        <!-- check if there are any messages -->
-                        {% for message in messages %}
-                        <!-- loop through the messages -->
-                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                <!-- End validation error return -->
                 <!-- form start -->
                 <form action='/getoutside/activities/new' method="POST">
-                    <!-- Input 1 -->
                     <input type="hidden" name="user_id" value="{{session['user_id']}}">
-                    <div class="form_control">
-                        <label class="label_width" for="activity">Activity Type:</label>
+                    <!-- Input 1 -->
+                    <div class="form_row">
+                        <!-- validation error return -->
+                        {% with messages = get_flashed_messages(category_filter=["type"]) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <label class="form_text" htmlfor="activity"><span class="error">{{message}}</span></label>
+                                {% endfor %}
+                            {% else %}
+                                <label class="form_text" htmlfor="activity">Activity Type:</label>
+                            {% endif %}
+                        {% endwith %}
                         <!-- dropdown menu -->
-                        <select name="activity">
+                        <select class="input form-control shadow-none" name="activity">
                             <option value="">--Select Activity--</option>
                             {% if session['activity'] is defined %}
                             <option value="{{session['activity']}}" hidden selected >{{session['activity']}}</option>
                             {% endif%}
+                            <option value="to the Gym">Gym</option>
                             <option value="Climbing">Climbing</option>
                             <option value="Cycling">Cycling</option>
                             <option value="Mtn. Biking">Mtn. Biking</option>
@@ -75,26 +83,44 @@
                             <option value="Snowshoeing">Snowshoeing</option>
                             <option value="Swimming">Swimming</option>
                         </select>
-                        <!-- end dropdown menu -->
                     </div>
+                    <!-- end dropdown menu -->
                     <!-- End Input 1 -->
                     <!-- Input 2 -->
-                    <div class="form_control">
-                        <label class="label_width" for="location">Activity Location:</label>
-                        <input class="input_width" type="text" name="location" value="{{session['location']}}">
+                    <div class="form_row">
+                        <!-- validation error return -->
+                        {% with messages = get_flashed_messages(category_filter=["location"]) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <label class="form_text" htmlfor="location"><span class="error">{{message}}</span></label>
+                                {% endfor %}
+                            {% else %}
+                                <label class="form_text" htmlfor="location">Location:</label>
+                            {% endif %}
+                        {% endwith %}
+                        <input class="input form-control shadow-none" type="text" name="location" value="{{session['location']}}">
                     </div>
                     <!-- End Input 2 -->
-                    <!-- Input  -->
-                    <div class="form_control">
-                        <label class="label_width" for="date">Date:</label>
-                        <input class="input_width" type="date" name="date" value="{{session['date']}}">
+                    <!-- Input 3 -->
+                    <div class="form_row">
+                        <!-- validation error return -->
+                        {% with messages = get_flashed_messages(category_filter=["date"]) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <label class="form_text" htmlfor="date"><span class="error">{{message}}</span></label>
+                                {% endfor %}
+                            {% else %}
+                                <label class="form_text" htmlfor="date">Date:</label>
+                            {% endif %}
+                        {% endwith %}
+                        <input class="input form-control shadow-none" type="date" name="date" value="{{session['date']}}">
                     </div>
                     <div>
                     <!-- End Input 3 -->
                     <!-- Buttons -->
-                    <div class="flex">
-                        <button type="submit" value="Login" class="click input mt-1 text-light bg-success bg-gradient rounded-1 ">SUBMIT</button>
-                        <a href="/getoutside/athlete" class="click btn btn-sm border-dark mt-1 text-light bg-danger bg-gradient rounded-1" role="button">CANCEL</a>
+                    <div class="buttons">
+                        <a href="/getoutside/activities" class="button brown" role="button">CANCEL</a>
+                        <button type="submit" value="Login" class="button green">SUBMIT</button>
                     </div>
                     <!-- End buttons -->
                 </form>
@@ -104,5 +130,7 @@
         </div>
         <!-- END TOPO Container -->
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
 </body>
 </html>

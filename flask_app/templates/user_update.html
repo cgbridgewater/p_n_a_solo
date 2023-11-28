@@ -5,93 +5,143 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update {{user.first_name}}'s Info</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/update.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 
+</head>
 <body>
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
-        <div>
-            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside">Home</a></li>
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
-                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
         <!-- edit form start-->
-        <form class="form_container" action="/getoutside/athlete/update" method="POST">
+        <form class="form_container" action="/getoutside/myprofile/edit" method="POST">
             <!-- title  -->
             <h1 class="title_text">Update {{user.first_name}}'s Information</h1>
-                <!-- validation error message -->
-                {% with messages = get_flashed_messages(category_filter=["update"]) %}
-                    <!-- declare a variable called messages -->
-                    {% if messages %}
-                        <!-- check if there are any messages -->
-                        {% for message in messages %}
-                            <!-- loop through the messages -->
-                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                <!-- validation error message -->
             <!-- input 1 -->
             <div class="input_control">
                 <!-- hidden id -->
                 <input type="hidden" name="id" value="{{user.id}}">
                 <!-- First Name -->
-                <label for="first_name">Update First Name</label>
-                <input type="text" name="first_name" placeholder="First Name" value="{{user.first_name}}" >
+                {% with messages = get_flashed_messages(category_filter=["update_first_name"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <label for="first_name">First Name: <span class="error">{{message}}</span></label>
+                        {% endfor %}
+                    {% else %}
+                        <label for="first_name">First Name:</label>
+                    {% endif %}
+                {% endwith %}
+                <input class="input form-control shadow-none" type="text" name="first_name" placeholder="First Name" value="{{user.first_name}}" >
             </div>
             <!-- end input 1 -->
             <!-- input 2 -->
             <div class="input_control">
                 <!-- Last Name -->
-                <label for="last_name">Update Last Name</label>
-                <input type="text" name="last_name" placeholder="Last Name" value="{{user.last_name}}" >
+                {% with messages = get_flashed_messages(category_filter=["update_last_name"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <label for="last_name">Last Name: <span class="error">{{message}}</span></label>
+                        {% endfor %}
+                    {% else %}
+                        <label for="last_name">First Name:</label>
+                    {% endif %}
+                {% endwith %}
+                <input class="input form-control shadow-none" type="text" name="last_name" placeholder="Last Name" value="{{user.last_name}}" >
             </div>
             <!-- end input 2 -->
             <!-- input 3 -->
             <div class="input_control">
-                <!-- number of boxes -->
-                <label for="email">Update Email</label>
-                <input type="email" name="email" placeholder="email" value="{{user.email}}">
+                {% with messages = get_flashed_messages(category_filter=["update_email"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <label for="email">Email: <span class="error">{{message}}</span></label>
+                        {% endfor %}
+                    {% else %}
+                        <label for="email">Email:</label>
+                    {% endif %}
+                {% endwith %}
+                <input class="input form-control shadow-none" type="email" name="email" placeholder="email" value="{{user.email}}">
             </div>  
             <!-- end input 3 -->
             <!-- buttons -->
             <div class="button_control">
                 <!-- submit button -->
-                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark text-light" role="button">CANCEL</a>
-                <input class="btn btn-sm bg-primary border border-1 border-dark text-light " type="submit" value="UPDATE">
-                <a href="/getoutside/athlete/delete" class="btn btn-sm bg-danger border border-1 border-dark text-light" role="button">DELETE</a>
+                <a href="/getoutside/myprofile" class="button green" role="button">CANCEL</a>
+                <input class="button blue" type="submit" value="UPDATE">
+                <button type="button" class="button brown" data-bs-toggle="modal" data-bs-target="#exampleModal">DELETE</button>
             </div>
             <!-- end buttons -->
         </form>
         <!-- end form -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                    </div> -->
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-content-center">
+                            <h1 class="modal-title" id="exampleModalLabel">DELETE ACCOUNT</h1>
+                            <a class="close" data-bs-dismiss="modal"aria-label="Close"><i class="button_close fa-regular fa-circle-xmark fa-2xl"></i></a>
+                        </div>
+                        
+                        <h2 class="text_center"><b class="text-danger">Whoa, there!</b></h2>
+                        <br>
+                        <h5 class="text_center brown_text">Once you delete your account, there's no getting it back.</h5>
+                        <br>
+                        <h5 class="text_center brown_text">Make sure you want to do this!</h5>
+                        <!-- Buttons -->
+                        <div class="buttons">
+                            <button type="button" class="button green" data-bs-dismiss="modal">CANCEL</button>
+                            <a href="/getoutside/myprofile/delete" class="button brown" role="button">DELETE IT!</a>
+                        </div>
+                        <!-- End buttons -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL -->
         <!-- image add form -->
         <form action="/getoutside/addimage" method="POST" enctype="multipart/form-data" class="form_container" >
             <!-- form title -->
             <h3 class="title_text">Add A Profile Image</h3>
             <!-- form errors -->
             <p>
-                {% with messages = get_flashed_messages() %}
+                {% with messages = get_flashed_messages(category_filter=["image"]) %}
                     {% if messages %}
                         <ul>
                             {% for message in messages%}
-                                <p class="error">{{ message }}</p>
+                                <p class="error text-center">{{ message }}</p>
                             {% endfor %}
                         </ul>
                     {% endif %}
@@ -99,16 +149,18 @@
             </p>
             <!-- form input -->
             <div class="flex_center">
-                <input oninput="filesize(this);" type="file" class="custom_file_input" name="image" id="image">
+                <input oninput="filesize(this);" type="file" class="input2 custom_file_input" name="image" id="image">
             </div>
             <!-- form buttons -->
-            <div class="text-center m-1">
-                <input class="btn btn-sm bg-primary border border-1 border-dark text-light " type="submit" value="Add Image">
-                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark text-light" role="button">CANCEL</a>
+            <div class="button_control">
+                <input class="button blue" type="submit" value="Add Image">
+                <a href="/getoutside/myprofile" class="button green" role="button">CANCEL</a>
             </div>
         </form>
         <!-- end image add form -->
     </main>
 <script src="{{ url_for('static', filename='js/image.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
 </body>
 </html>

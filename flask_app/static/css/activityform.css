@@ -1,24 +1,20 @@
 /* style for activity form */
 
-.outside {
-    width:100vw;
-    height:25vh;
-}
-
 .error {
     color: darkred;
     font-weight: 800;
+    margin: 0;
 }
 
 .activity_form {
+    margin: 20px auto;
+    width: 30%;
+    min-width:370px ;
+    padding: 10px 10px;
     border: 3px solid green;
     border-radius: 5px;
     background-color: honeydew;
     opacity: 85%;
-    width: 40%;
-    min-width:375px ;
-    margin: 7% auto;
-    padding: 1% 3%;
     box-shadow: 5px 8px 10px rgba(2, 20, 2, 0.5);
 }
 
@@ -28,41 +24,44 @@ h3 {
     font-weight: 700;
 }
 
-.form_control {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 2% 0;
-}
-
-.label_width {
+.form_text {
     min-width: 125px;
     color: green;
     font-weight: 700;
     font-size: 18px;
 }
 
-.input_width {
-    width: 200px;
-    height: 30px;
-    background-color: #FFFFF5;
-    border: 2px solid green;
-    color: green;
-    font-weight: 600;
-}
-
-.click {
-    width: 125px;
-}
-
-select, option {
-    width: 200px;
+.input, .input:focus, input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
     text-align: center;
     height: 30px;
-    background-color: #FFFFF5;
-    border: 2px solid green;
-    color: green;
-    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 0 5px;
+    width: 200px;
+    color:#6B0F1A;
+    -webkit-text-fill-color: #6B0F1A;
+    -webkit-box-shadow: 0 0 0px 1000px #fffef5 inset;
+    transition: background-color 5000s ease-in-out 0s;
+    font-weight: 700;
+    background-color: #fffef5;
+    border:2px solid rgba(0, 128, 0, .4);
+}
+
+
+.input:focus, .input:hover {
+    border:2px solid  rgba(0, 128, 0, .9);
+    caret-color: #6B0F1A;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 
 .flex {
@@ -70,7 +69,18 @@ select, option {
     justify-content: space-evenly;
 }
 
-main {
+.flex2 {
+    display: flex;
+    justify-content: center;
+}
+
+.form_row {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
     min-height: 100vh;
     width: 100vw;
     height: 100%;

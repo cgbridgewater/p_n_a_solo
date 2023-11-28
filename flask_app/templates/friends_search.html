@@ -5,36 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find A Friend</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
 </head>
 <body>
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
-        <div>
-            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside">Home</a></li>
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
-                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
         <!-- INPUT SECTION -->
-        <h1>Find friends to Get Outside!</h1>
         <div class="formContainer">
+            <h1 class="friend_search_title">Find Friends</h1>
             <div class="filter-post" >
-                <input type="text" class="filter" id="filter" placeholder="Type Name..." onkeyup="searchUser()" />
+                <input type="text" class="input form-control shadow-none" id="filter" placeholder="Type Name..." onkeyup="searchUser()" autofocus />
+                <a class="filter_x-out" onClick="window.location.reload();" >
+                    <i class="fa-solid fa-square-xmark fa-2xl" id="filter_x_out"></i>
+                </a>
             </div>
         </div>
         <!-- END INPUT SECTION -->
@@ -42,22 +55,40 @@
         <table class="display_table" id="userTable">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th></th>
+                    <th class="title">Name</th>
+                    <th class="title">Follow</th>
                 </tr>
             </thead>
             <tbody id="filtered_list">
                 {% for user in allusers %}
-                    <tr>
-                        <td><a href="/getoutside/athlete/{{user.id}}">{{user.first_name.capitalize()}} {{user.last_name.capitalize()}} </a></td>                        
-                        <td><a onclick="myalert()" class="btn btn-success m-1 p-1 rounded-2 border-2 border-dark text-decoration-none text-light"  href="/getoutside/athlete/{{user.id}}/follow"  role="button">FOLLOW</a></td>
-                    </tr>
+                <!-- declare counter -->
+                {% set ns = namespace(counter =0) %}
+                <tr>
+                    <!-- loop to see if array contains match -->
+                    {% for follow in followers%}
+                        {% if user.id == follow.friend.id %}
+                            <!-- increase counter when match found -->
+                            {% set ns.counter = ns.counter +1 %}
+                        {% endif%}
+                    {% endfor %}
+                    <!-- display based on matches found -->
+                    <!-- no matches -->
+                    {% if ns.counter == 0 %}
+                        <td class="text-start ps-3" id="text-start"><a class="name text" href="/getoutside/athlete/{{user.id}}">{{user.first_name.capitalize()}} {{user.last_name.capitalize()}} </a></td>
+                        <td class="center"><a class="button green" href="/getoutside/athlete/{{user.id}}/follow">FOLLOW</a></td>
+                    <!-- matches -->
+                    {% else %}
+                        <td class="text-start ps-3" id="text-start"><a class="name text" href="/getoutside/athlete/{{user.id}}">{{user.first_name.capitalize()}} {{user.last_name.capitalize()}} </a></td>
+                        <td class="center"><a class="button brown" href="/getoutside/athlete/{{user.id}}/unfollow">UNFOLLOW</a></td>
+                    {% endif%}
                 {% endfor %}
+                </tr>
             </tbody>
         </table>
         <!-- END Display Users -->
     </main>
+    <script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
-<script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>

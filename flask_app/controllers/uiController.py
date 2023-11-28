@@ -5,16 +5,31 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
+
 ### REDIRECT TO DOMAIN CONTROL ROUTE
 @app.route('/')
 def index():
-    return redirect("/getoutside/login")
+    return redirect("/getoutside")
 
 
 ### REGISTER FORM 
 @app.route('/getoutside/register')
 def register_page():
     return render_template("register.html")
+
+
+### TO REGISTRATION PAGE
+@app.route("/getoutside/toregister")
+def redirect_to_landing():
+    session.clear()
+    return redirect("/getoutside")
+
+
+### TO LOGIN PAGE
+@app.route("/getoutside/tologin")
+def redirect_to_login():
+    session.clear()
+    return redirect("/getoutside/login")
 
 
 ### REGISTRATION FORM POST ACTION
@@ -24,9 +39,8 @@ def register():
         session["first_name"] = request.form["first_name"]
         session["last_name"] = request.form["last_name"]
         session["email"] = request.form["email"]
-        return redirect('/getoutside/register')
+        return redirect('/getoutside/')
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
-    print(pw_hash) 
     data = {
         "first_name": request.form['first_name'],
         "last_name" : request.form['last_name'],
@@ -38,7 +52,7 @@ def register():
     session.pop("last_name", None)
     session.pop("email", None)
     session['user_id'] = user_id
-    return redirect("/getoutside")
+    return redirect("/getoutside/myprofile")
 
 
 ### LOGIN FORM 
@@ -63,7 +77,7 @@ def login():
         return redirect('/getoutside/login')
     session["user_id"] = user_in_db.id
     session.pop("email2", None)
-    return redirect("/getoutside")
+    return redirect("/getoutside/myprofile")
 
 
 ### ROUTE FOR LOGOUT 

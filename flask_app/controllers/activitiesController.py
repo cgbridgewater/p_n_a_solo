@@ -1,14 +1,23 @@
-from pprint import pprint
 from flask_app import app
 from flask import render_template, redirect, session, request
 from flask_app.models.users import User
 from flask_app.models.comments import Comment
 from flask_app.models.activities import Activity
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+
+###  Landing Page
+@app.route('/getoutside')
+@app.route('/getoutside/')
+def dashboard():
+    return render_template("landing_page.html")
 
 
 ###  ACTIVITY DASH BOARD
-@app.route('/getoutside')
-@app.route('/getoutside/')
+@app.route('/getoutside/activities')
+@app.route('/getoutside/activities/')
 def activity_dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"
@@ -16,8 +25,7 @@ def activity_dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template(
-        "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities())
+    return render_template("activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities(),attending = Activity.get_all_activities_and_attendees(data))
 
 
 ### NEW ACTIVITY FORM
@@ -32,7 +40,19 @@ def new_activity_form_page():
     return render_template("activity_new_form.html")
 
 
-### NEW ACTIVITY POST ACTION 
+### NEW ACTIVITY FORM
+@app.route('/getoutside/activities/new2')
+def new_activity_form_page_2():
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data ={
+        'id': session['user_id']
+    }
+    return render_template("activity_new_form_2.html")
+
+
+### NEW ACTIVITY POST ACTION RETURN TO NEW ACTIVITY CREATED
 @app.route('/getoutside/activities/new', methods=["POST"])
 def create_activity_form_action():
     if 'user_id' not in session:
@@ -43,11 +63,11 @@ def create_activity_form_action():
         session["location"] = request.form["location"]
         session["date"] = request.form["date"]
         return redirect('/getoutside/activities/new') 
-    Activity.create_activity_form_action(request.form)
+    new_activity_id = Activity.create_activity_form_action(request.form)
     session.pop("activity", None)
     session.pop("location", None)
     session.pop("date", None)
-    return redirect("/getoutside/athlete") 
+    return redirect(f"/getoutside/activity/{new_activity_id}") 
 
 
 ### UPDATE ACTIVITY FORM (Protected)
@@ -114,7 +134,7 @@ def attend_activity_return_to_home_page(id):
         'user_id' : session['user_id']
     }
     Activity.attend_activity(data)
-    return redirect("/getoutside")
+    return redirect("/getoutside/activities")
 
 
 ### ATTEND ACTIVITY ROUTE WITH ATHLETE DASH RETURN
@@ -129,8 +149,20 @@ def attend_activity_return_to_activity_page(id):
     Activity.attend_activity(data)
     return redirect(f"/getoutside/activity/{id}")
 
+### ATTEND ACTIVITY ROUTE WITH TO DASHBOARD
+@app.route('/getoutside/activity/<int:id>/join3')
+def attend_activity_return_to_activity_dash(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.attend_activity(data)
+    return redirect("/getoutside/activities")
 
-### UNATTEND ACTIVITY RETURN TO HOME PAGE
+
+### UNATTEND ACTIVITY RETURN TO ACTIVITY PAGE
 @app.route('/getoutside/activity/<int:id>/unjoin')
 def unattend_activity(id):
     if 'user_id' not in session:
@@ -141,6 +173,30 @@ def unattend_activity(id):
     }
     Activity.unattend_activity(data)
     return redirect(f"/getoutside/activity/{id}")
+
+### UNATTEND ACTIVITY RETURN TO PROFILE PAGE
+@app.route('/getoutside/activity/<int:id>/remove')
+def remove_activity(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.unattend_activity(data)
+    return redirect(f"/getoutside/myprofile")
+
+### UNATTEND ACTIVITY RETURN TO ACTIVITY DASHBOARD
+@app.route('/getoutside/activity/<int:id>/un-join')
+def remove_activity_to_dashboard(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.unattend_activity(data)
+    return redirect(f"/getoutside/activities")
 
 
 ### DELETE ACTIVITY BY ID (Protected)
@@ -155,4 +211,4 @@ def delete_activity_by_id(id):
     if session['user_id'] != activity.creator.id:
         return redirect('/logout')
     Activity.delete_activity_by_id(data)
-    return redirect("/getoutside/athlete")
+    return redirect("/getoutside/myprofile")

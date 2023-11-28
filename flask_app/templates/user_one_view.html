@@ -6,84 +6,206 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name.capitalize()}}'s Info</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user_one_view.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
-        <div>
-            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>
-        <!-- hamburger nav -->
-        <div class="hamburger-menu">
-            <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
-                <span></span>
-            </label>
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
             <ul class="menu__box">
-                <li><a class="menu__item" href="/getoutside">Home</a></li>
-                <li><a class="menu__item" href="/getoutside/athlete">My Profile</a></li>
-                <li><a class="menu__item" href="/getoutside/activities/new">Add Activity</a></li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/myprofile">My Profile</a></li>
                 <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
                 <li><a class="menu__item" href="/logout">Log Out</a></li>
             </ul>
         </div>
-        <!-- end hamburger nav -->
+        <!-- end menu popout -->
         <!-- top wrapper -->
         <div class="top_wrapper">
+            <!-- user image/name box -->
+            <div class="image_box">
+                <h2 class="user">{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h2>
+                <!--  Profile Image Container -->
+                <div class="image">
+                    <img class="profile_img" src="/static/images/{{user.image_file}}" alt="{{user.image_file}}">
+                </div>
+            </div>
+            <!-- end user image/name box -->
             <!-- User Data -->
-                <div class="profile_info">  
+            <div class="profile_info">  
+                <!-- profile title / follow -->
+                <div class="flex2">
+                    <h2 class="user">User Info</h2>
+                    {% set ns = namespace(counter =0) %}
+                    {% for follow in followers%}
+                    {% if follow.friend.id == user.id %}
+                    <!-- increase counter when match found -->
+                    {% set ns.counter = ns.counter +1 %}
+                    {% endif%}
+                    {% endfor %}
+                    {% if ns.counter == 0 %}
+                    <a class="button green" href="/getoutside/athlete/{{user.id}}/followbyid" role="button">FOLLOW</a>
+                    {% else %}
+                    <a class="button brown" href="/getoutside/athlete/{{user.id}}/unfollowbyid" role="button">UNFOLLOW</a>
+                    {% endif%}
+                </div>
+                <!-- profile table -->
                 <table class="table">
                     <tbody>
+                        <!-- declare events counter -->
+                        {% set ns = namespace(events =0) %}
+                        <!-- loop through events -->
+                        {% for count in counts%}
+                                <!-- increase counter for each event found -->
+                                {% set ns.events = ns.events +1 %}
+                        {% endfor %}
                         <tr>
-                            <!-- box title -->
-                            <td>
-                                <h1 class="user">{{user.first_name.capitalize()}}'s Info</h1></td>
-                            <td>
-                                <div class="flex2">
-                                    <a onclick="myalert()"  class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/{{user.id}}/follow" role="button">FOLLOW</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h4>Name:</h4></td>
-                            <td><h4>{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h4></td>
+                            <td><h4>Events Created:</h4></td>
+                            <td><h4 class="text-end">{{ns.events}}</h4></td>
                         </tr>
                         <tr>
                             <td><h4>Member Since:</h4></td>
-                            <td><h4>{{ user.created_at.strftime("%B %e, %Y %I:%M %p") }}</h4></td>
+                            <td><h4 class="text-end">{{ user.created_at.strftime("%B %Y") }}</h4></td>
+                        </tr>
+                        <tr>
+                            <td><h4>Badges:</h4></td>
+                            <td>
+                                <h4 class="badge_container text-end me-1">
+                                    <!-- counter for joined activities -->
+                                    {% set nsjoined = namespace(joined =0) %}
+                                    {% for join in joined %}
+                                        {% set nsjoined.joined = nsjoined.joined +1 %}
+                                    {% endfor %}
+                                    <!-- counter for friends made -->
+                                    {% set nsfriends = namespace(friends = 0) %}
+                                    {% for follower in followers %}
+                                        {% set nsfriends.friends = nsfriends.friends +1 %}
+                                    {% endfor %}
+                                    <!-- counter for comments made -->
+                                    {% set nscomments = namespace(comment = 0) %}
+                                    {% for comment in comments %}
+                                        {% if comment.commenter.upper() == user.first_name.upper() +" " + user.last_name.upper() %}
+                                            {% set nscomments.comment = nscomments.comment +1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <!-- sign up badge -->
+                                    <img class="badges" src="/static/images/badges/signedup.png" alt="sign up badge">
+                                    <!-- upload image badge -->
+                                    {% if user.image_file != "default.png" %}
+                                        <img class="badges" src="/static/images/badges/profile_badge.png" alt="profile pic badge">
+                                    {% else %}
+                                        <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                    {% endif %}
+                                    <!-- friends badge -->
+                                    {% if nsfriends.friends > 0 %}
+                                        <img class="badges" src="/static/images/badges/friends.png" alt="friends made">
+                                    {% else %}
+                                        <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                    {% endif %}
+                                    <br>
+                                    <!-- activities created badges -->
+                                    {% if ns.events > 0 and ns.events < 5 %}
+                                    <img class="badges" src="/static/images/badges/1activities.png" alt="events created badge">
+                                    {% elif ns.events >= 5 and ns.events < 10 %}
+                                    <img class="badges" src="/static/images/badges/5activities.png" alt="events created badge">
+                                    {% elif ns.events >= 10 and ns.events < 25 %}
+                                    <img class="badges" src="/static/images/badges/10activities.png" alt="events created badge">
+                                    {% elif ns.events >= 25 and ns.events < 50 %}
+                                    <img class="badges" src="/static/images/badges/25activities.png" alt="events created badge">
+                                    {% elif ns.events >= 50 and ns.events < 100 %}
+                                    <img class="badges" src="/static/images/badges/50activities.png" alt="events created badge">
+                                    {% elif ns.events >= 100 %}
+                                    <img class="badges" src="/static/images/badges/100activities.png" alt="events created badge">
+                                    {% else %}
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                    {% endif %}
+                                    <!-- activities joined badges -->
+                                    {% if nsjoined.joined > 0 and nsjoined.joined < 5 %}
+                                    <img class="badges" src="/static/images/badges/1joined.png" alt="activities joined badge"> 
+                                    {% elif nsjoined.joined >= 5 and nsjoined.joined < 10 %}
+                                    <img class="badges" src="/static/images/badges/5joined.png" alt="activities joined badge"> 
+                                    {% elif nsjoined.joined >= 10 and nsjoined.joined < 25 %}
+                                    <img class="badges" src="/static/images/badges/10joined.png" alt="activities joined badge"> 
+                                    {% elif nsjoined.joined >= 25 and nsjoined.joined < 50 %}
+                                    <img class="badges" src="/static/images/badges/25joined.png" alt="activities joined badge"> 
+                                    {% elif nsjoined.joined >= 50 and nsjoined.joined < 100 %}
+                                    <img class="badges" src="/static/images/badges/50joined.png" alt="activities joined badge"> 
+                                    {% elif nsjoined.joined >= 100 %}
+                                    <img class="badges" src="/static/images/badges/100joined.png" alt="activities joined badge"> 
+                                    {% else %}
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                    {% endif %}
+                                    {% if nscomments.comment >0 and nscomments.comment < 5 %}
+                                    <img class="badges" src="/static/images/badges/1comments.png" alt="activities joined badge"> 
+                                    {% elif nscomments.comment >= 5 and nscomments.comment < 10 %}
+                                    <img class="badges" src="/static/images/badges/5comments.png" alt="activities joined badge"> 
+                                    {% elif nscomments.comment >= 10 and nscomments.comment < 25 %}
+                                    <img class="badges" src="/static/images/badges/10comments.png" alt="activities joined badge"> 
+                                    {% elif nscomments.comment >= 25 and nscomments.comment < 50 %}
+                                    <img class="badges" src="/static/images/badges/25comments.png" alt="activities joined badge"> 
+                                    {% elif nscomments.comment >= 50 and nscomments.comment < 100 %}
+                                    <img class="badges" src="/static/images/badges/50comments.png" alt="activities joined badge"> 
+                                    {% elif nscomments.comment >= 100 %}
+                                    <img class="badges" src="/static/images/badges/100comments.png" alt="activities joined badge"> 
+                                    {% else %}
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                    {% endif %}
+                                </h4>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>  
             <!-- End User Data -->
             <!-- Right Box -->
-            <div class="friend_right">
-                <!-- title and button -->
-                <div>
-                    <h4>Activities {{ user.first_name.capitalize() }} is Leading</h4>    
-                </div>
-                <!-- activity list -->
-                <div class="activity_links">
-                    <!-- loop through activities -->
-                    {% for activity in activities %}
-                        <!-- filter for only logged in user -->
-                        {% if activity.creator.id == user.id %}
-                        <!-- display data -->
+
+
+                <div class="friend_right">
+                    <!-- title and button -->
+                    <div>
+                        <h4>Activities {{ user.first_name.capitalize() }} is Leading</h4>    
+                    </div>
+                    <!-- activity list -->
+                    <div class="activity_links">
+                        <!-- loop through activities -->
+                        {% for activity in activities %}
+                            <!-- filter for only logged in user -->
+                            {% if activity.creator.id == user.id %}
+                            <!-- display data -->
                             <h5>
-                                <a class="link" href="/getoutside/activity/{{activity.id}}"> {{ user.first_name.capitalize() }}'s going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                                <a class="link" href="/getoutside/activity/{{activity.id}}"> {{ user.first_name.capitalize() }}'s going {{activity.activity}} at {{activity.location.title()}} on {{activity.date.strftime("%B %e, %Y")}} </a>
                             </h5>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+
         </div>
     </main>
     <!-- End Main -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
 </body>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>

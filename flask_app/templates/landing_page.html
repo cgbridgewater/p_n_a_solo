@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getOUTSIDE</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/landing_page.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login_style.css') }}">
+</head>
+
+<body class="background">
+    <!-- main wrapper -->
+    <main>
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+            <div class="wrapper">
+                <!-- left box -->
+                <div class="container1">
+                    <h3 class="title">So you're ready!  </h3>
+                    <h4 class="text-start brown ps-3">For the blood,<br> The sweat,<br> The tears..</h4>
+                    <h4 class="title"><em>But wait!</em></h4>
+                    <h4 class="text-start brown ps-3">What are we doing? <br>Where are we going? <br>Who is coming?</h4>
+                    <h4 class="title">Don't be left hanging!</h4>
+                    <img class="climber" src="https://live.staticflickr.com/65535/52822743399_b4892e348c.jpg" alt="Rock Climber">
+                </div>
+                <!-- container for registration -->
+                <div class="container2">
+                    <!-- reg wrapper -->
+                    <div class="register">
+                        <!-- header -->
+                        <h3 class="title down">Register to Get OUTSIDE</h3>
+                        <!-- form start -->
+                        <form action='/getoutside/register' method="POST">
+                            <!-- first name section -->
+                            <div class="text-start">
+                                {% with messages = get_flashed_messages(category_filter=["firstName"]) %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <label for="firstName" class="error">{{message}}</label>
+                                        {% endfor %}
+                                    {% else %}
+                                    <label for="firstName" class="text-sm-start">First Name:</label>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div>
+                                <input type="text" id="firstName" name="firstName" autofocus class="input form-control shadow-none" autocomplete="given-name" value="{{session['first_name']}}">
+                            </div>
+                            <!-- END first name section -->
+                            <!-- Last name section -->
+                            <div class="text-start">
+                                {% with messages = get_flashed_messages(category_filter=["lastName"]) %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <label for="lastName" class="error">{{message}}</label>
+                                        {% endfor %}
+                                    {% else %}
+                                    <label for="lastName" class="text-sm-start">Last Name:</label>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div>
+                                <input type="text" id="lastName" name="lastName" class="input form-control shadow-none" autocomplete="family-name" value="{{session['last_name']}}">
+                            </div>
+                            <!-- END Last name section -->
+                            <!-- Email section -->
+                            <div class="text-start">
+                                {% with messages = get_flashed_messages(category_filter=["email"]) %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <label for="email" class="error">{{message}}</label>
+                                        {% endfor %}
+                                    {% else %}
+                                    <label for="email" class="text-sm-start">Email:</label>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div>
+                                <input type="email" id="email" name="email" class="input form-control shadow-none" autocomplete="email" value="{{session['email']}}">
+                            </div>
+                            <!-- End Email section -->
+                            <!-- Password section -->
+                            <div class="text-start">
+                                {% with messages = get_flashed_messages(category_filter=["password"]) %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <label for="password" class="error">{{message}}</label>
+                                        {% endfor %}
+                                    {% else %}
+                                    <label for="password" class="text-sm-start">Password:</label>
+                                    {% endif %}
+                                {% endwith %}                        </div>
+                            <div>
+                                <input type="password" id="password" name="password" class="input form-control shadow-none">
+                            </div>
+                            <!-- End Password section -->
+                            <!-- Confirm Password section -->
+                            <div class="text-start">
+                                {% with messages = get_flashed_messages(category_filter=["confirm"]) %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <label for="confirm_password" class="error">{{message}}</label>
+                                        {% endfor %}
+                                    {% else %}
+                                    <label for="confirm_password" class="text-sm-start">Confirm Password:</label>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div>
+                                <input type="password" id="confirm_password" name="confirm_password" class="input form-control shadow-none">
+                            </div>
+                            <!-- EndConfirm Password section -->
+                            <!-- login link -->
+                            <div class="button_container">
+                                <button type="submit" value="Register" class="button green">Get OUTSIDE</button>
+                            </div>
+                        </form>
+                        <!--form END -->
+                    </div>
+                    <p class="sign_in mt-2">Already a member? <a class="sign_in_link" href="/getoutside/tologin">Log In!</a></p>
+                </div>
+                <!-- end register container -->
+                <!-- right box -->
+                <div class="container3">
+                    <h3 class="title">All problems of the <em>past!</em></h3>
+                    <h6 class="secondary_title">When you sign up to <span class="outside">Get OUTSIDE</span></h6>
+                    <ul class="list_container">
+                        <li class="list">Create and host activities</li>
+                        <li class="list">Find and follow friends</li>
+                        <li class="list">Join in to friends activities</li>
+                        <li class="list">Comment on the activities</li>
+                        <li class="list">Customize Profile Images</li>
+                        <li class="list">Earn Badges</li>
+                    </ul>
+                    <ul class="slideshow">
+                        <li><span></span></li>
+                        <li><span></span></li>
+                        <li><span></span></li>
+                        <li><span></span></li>
+                        <li><span></span></li>
+                    </ul>
+                    <h5 class="text-center brown">Now it's time to log off <br> and</h5>
+                    <h3 class="title mb-0">Get OUTSIDE!</h3>
+                </div>
+            </div>
+        </main>
+</body>
+</html>

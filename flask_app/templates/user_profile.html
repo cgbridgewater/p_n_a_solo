@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name.capitalize()}}'s profile</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/page_header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tooltip.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- main wrapper -->
+    <main>
+        <!-- logo bar -->
+        <header>
+            <h1 class="header_text">Get OUTSIDE</h1>
+        </header>
+        <!-- menu button -->
+        <a class="menu_trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            MENU &nbsp; <i class="fas fa-caret-square-down"></i>
+        </a>
+        <!-- end menu button -->
+        <!-- menu popout -->
+        <div class="offcanvas  offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <a class="menu_close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="button_menu_close fas fa-caret-square-down fa-rotate-90 fa-2xl"></i></a>
+            <ul class="menu__box">
+                <li>
+                    <a class="menu__item" href="#"data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Create New Activity
+                    </a>
+                </li>
+                <li><a class="menu__item" href="/getoutside/activities">Activities</a></li>
+                <li><a class="menu__item" href="/getoutside/friends">Find Friends</a></li>
+                <li><a class="menu__item" href="/logout">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- end menu popout -->
+        <!-- top row wrapper -->
+        <div class="top_wrapper">
+            <!-- user image/name box -->
+            <div class="image_box">
+                <!-- user name -->
+                <h1 class="user">{{user.first_name.capitalize()}}'s Profile</h1>
+                <!--  Profile Image Container -->
+                <div class="image">
+                    <img class="profile_img" src="/static/images/{{user.image_file}}" alt="{{user.image_file}}">
+                </div>
+                <!-- profile buttons -->
+                <div class="button_flex">
+                    <a class="button green" href="/getoutside/myprofile/edit" role="button">EDIT</a>
+                </div>
+            </div>
+            <!-- end user image/name box -->
+            <!-- User Data by row -->
+            <div class="profile_info">  
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td><h4>Profile Name:</h4></td>
+                        <td><h4 class="text-end me-4 text_brown">{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>Profile Email:</h4></td>
+                        <td><h4 class="text-end me-4 badge_wrap text_brown">{{ user.email }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>Events Created:</h4></td>
+                            <!-- declare events counter -->
+                            {% set ns = namespace(events =0) %}
+                            <!-- loop through events -->
+                            {% for count in counts%}
+                                <!-- increase counter for each event found -->
+                                {% set ns.events = ns.events +1 %}
+                            {% endfor %}
+                        <td><h4 class="text-end me-4 text_brown">{{ ns.events }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>Member Since:</h4></td>
+                        <td><h4 class="text-end me-4 text_brown">{{ user.created_at.strftime("%B %e, %Y") }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>My Badges:</h4></td>
+                        <td>
+                            <h4 class="text-end me-4">
+                                <!-- counter for joined activities -->
+                                {% set nsjoined = namespace(joined =0) %}
+                                {% for join in all_joined %}
+                                    {% set nsjoined.joined = nsjoined.joined +1 %}
+                                {% endfor %}
+                                    <!-- counter for friends made -->
+                                {% set nsfriends = namespace(friends = 0) %}
+                                {% for follower in followers %}
+                                    {% set nsfriends.friends = nsfriends.friends +1 %}
+                                {% endfor %}
+                                <!-- counter for comments made -->
+                                {% set nscomments = namespace(comment = 0) %}
+                                {% for comment in comments %}
+                                    {% if comment.commenter.upper() == user.first_name.upper() +" " + user.last_name.upper() %}
+                                        {% set nscomments.comment = nscomments.comment +1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                <!-- sign up badge -->
+                                <span class="tool-tip" data-tooltip-title="Signed Up To Get OUTSIDE" data-tooltip-position="top">
+                                    <img class="badges " src="/static/images/badges/signedup.png" alt="sign up badge">
+                                </span>
+                                <!-- upload image badge -->
+                                {% if user.image_file != "default.png" %}
+                                <span class="tool-tip" data-tooltip-title="Make It Custom Custom Image" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/profile_badge.png" alt="profile pic badge">
+                                </span>
+                                {% else %}
+                                <span class="tool-tip" data-tooltip-title="Customize Your Profile Image To Earn Badge" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                </span>
+                                {% endif %}
+                                <!-- friends badge -->
+                                {% if nsfriends.friends > 0 %}
+                                <span class="tool-tip" data-tooltip-title="Friend Finder" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/friends.png" alt="friends made">
+                                </span>
+                                {% else %}
+                                <span class="tool-tip" data-tooltip-title="Add A Friend To Earn Badge" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                </span>
+                                {% endif %}
+                                <br>
+                                <!-- activities created badges -->
+                                {% if ns.events > 0 and ns.events < 5 %}
+                                <span class="tool-tip" data-tooltip-title="Events Led" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/1activities.png" alt="events created badge">
+                                </span>
+                                {% elif ns.events >= 5 and ns.events < 10 %}
+                                <span class="tool-tip" data-tooltip-title="Events Led" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/5activities.png" alt="events created badge">
+                                </span>
+                                {% elif ns.events >= 10 and ns.events < 25 %}
+                                <span class="tool-tip" data-tooltip-title="Events Led" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/10activities.png" alt="events created badge">
+                                </span>
+                                {% elif ns.events >= 25 and ns.events < 50 %}
+                                <span class="tool-tip" data-tooltip-title="Events Led" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/25activities.png" alt="events created badge">
+                                </span>
+                                {% elif ns.events >= 50 and ns.events < 100 %}
+                                <span class="tool-tip" data-tooltip-title="Events Led" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/50activities.png" alt="events created badge">
+                                </span>
+                                {% else %}
+                                <span class="tool-tip" data-tooltip-title="Create An Event To Earn Badge" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                </span>
+                                {% endif %}
+                                <!-- activities joined badges -->
+                                {% if nsjoined.joined > 0 and nsjoined.joined < 5 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/1joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 1+ Events"> 
+                                </span>
+                                {% elif nsjoined.joined >= 5 and nsjoined.joined < 10 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/5joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 5+ Events"> 
+                                </span>
+                                {% elif nsjoined.joined >= 10 and nsjoined.joined < 25 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/10joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 10+ Events"> 
+                                </span>
+                                {% elif nsjoined.joined >= 25 and nsjoined.joined < 50 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/25joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 25+ Events"> 
+                                </span>
+                                {% elif nsjoined.joined >= 50 and nsjoined.joined < 100 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/50joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 50+ Events"> 
+                                </span>
+                                {% elif nsjoined.joined >= 100 %}
+                                <span class="tool-tip" data-tooltip-title="Joined In" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/100joined.png" alt="activities joined badge" data-bs-toggle="tooltip" data-bs-placement="top" title="Join 50+ Events"> 
+                                </span>
+                                {% else %}
+                                <span class="tool-tip" data-tooltip-title="Join An Event To Earn Badge" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                </span>
+                                {% endif %}
+                                {% if nscomments.comment >0 and nscomments.comment < 5 %}
+                                <span class="tool-tip" data-tooltip-title="Chat It Up" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/1comments.png" alt="activities joined badge"> 
+                                </span>
+                                {% elif nscomments.comment >= 5 and nscomments.comment < 10 %}
+                                <span class="tool-tip" data-tooltip-title="Chat It Up" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/5comments.png" alt="activities joined badge"> 
+                                </span>
+                                {% elif nscomments.comment >= 10 and nscomments.comment < 25 %}
+                                <span class="tool-tip" data-tooltip-title="Chat It Up" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/10comments.png" alt="activities joined badge"> 
+                                </span>
+                                {% else %}
+                                <span class="tool-tip" data-tooltip-title="Make A Comment To Earn Badge" data-tooltip-position="top">
+                                    <img class="badges" src="/static/images/badges/empty.png" alt="empty badge"> 
+                                </span>
+                                {% endif %}
+                            </h4>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>  
+            <!-- End User Data -->
+            <!-- Friend List container -->
+            <div class="friend_list_container">
+                <!-- find friend button -->
+                <!-- title -->
+                <div class="flex">
+                    <h4 class="hover_text">My Friends
+                        <span class="tool-tip" data-tooltip-title="Find Friends" data-tooltip-position="top">
+                            <a href="/getoutside/friends"><i class="plus fa-solid fa-magnifying-glass-plus"></i></a>
+                        </span>
+                    </h4>
+                </div>
+                <!-- friends list -->
+                <div class="friend_box">
+                    <!-- link list  -->
+                    <div>
+                        {% for follower in followers %}
+                        <ul class="m-0 p-0">
+                            <h5 class="friend_list">
+                                <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name.capitalize()}} {{follower.friend.last_name.capitalize()}}</a>
+                                <a class="unfollow unjoin2_button" href="/getoutside/athlete/{{follower.friend.id}}/unfollowing"><i class="x_out fa-solid fa-square-xmark fa-lg"></i></a>
+                            </h5>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                    <!-- end list  -->
+                </div> 
+            </div>
+            <!-- End Friend List Container -->
+        </div>
+        <!-- End Wrapper -->
+        <!-- center page decoration spacer -->
+        <hr class="spacer">
+        <!-- Activities Container -->
+        <div class="activity_container">
+            <!-- Left Box -->
+            <div class="friend_left">
+                <!-- title and button -->
+                <div class="flex">
+                    <h4 class="hover_text">Activities I'm Leading
+                        <span class="tool-tip" data-tooltip-title="Create New Activity" data-tooltip-position="top">
+                            <!-- Button trigger modal -->
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="plus fa-solid fa-circle-plus"></i></a>
+                        </span>
+                    </h4>
+                </div>
+                <!-- activity list -->
+                <div class="activity_links">
+                    <!-- loop through activities -->
+                    {% for a in activities %}
+                        <!-- filter for only logged in user -->
+                        {% if a.creator.id == session.user_id %}
+                        {% set nsjoined.joined = nsjoined.joined +1 %}
+                        <!-- display data -->
+                            <h5 class="d-flex justify-content-between align-content-center">
+                                <a class="link" href="/getoutside/activity/{{a.id}}"> I'm going {{a.activity}} at {{a.location.title()}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                            </h5>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modal_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- Modal Title -->
+                            <div class="d-flex justify-content-between align-content-center">
+                                <h1 class="modal-title" id="modal_label">Create An Activity</h1>
+                                <a class="close" data-bs-dismiss="modal" aria-label="Close"><i class="button_close fa-regular fa-circle-xmark fa-2xl"></i></a>
+                            </div>
+                            <!-- form start -->
+                            <form action='/getoutside/activities/new' method="POST">
+                                <!-- Input 1 -->
+                                <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                                <div class="form_control">
+                                    <label class="label" for="activity">Activity Type:</label>
+                                    <!-- dropdown menu -->
+                                    <select class="input form-control shadow-none" id="activity" name="activity">
+                                        <option value="">--Select Activity--</option>
+                                        {% if session['activity'] is defined %}
+                                        <option value="{{session['activity']}}" hidden selected >{{session['activity']}}</option>
+                                        {% endif%}
+                                        <option value="to the Gym">Gym</option>
+                                        <option value="Climbing">Climbing</option>
+                                        <option value="Cycling">Cycling</option>
+                                        <option value="Mtn. Biking">Mtn. Biking</option>
+                                        <option value="Disc Golfing">Disc Golfing</option>
+                                        <option value="Golfing">Golfing</option>
+                                        <option value="Hiking">Hiking</option>
+                                        <option value="Paddling">Paddling</option>
+                                        <option value="Rowing">Rowing</option>
+                                        <option value="Running">Running</option>
+                                        <option value="Skiing">Skiing</option>
+                                        <option value="Snowboarding">Snowboarding</option>
+                                        <option value="Snowshoeing">Snowshoeing</option>
+                                        <option value="Swimming">Swimming</option>
+                                    </select>
+                                    <!-- end dropdown menu -->
+                                </div>
+                                <!-- End Input 1 -->
+                                <!-- Input 2 -->
+                                <div class="form_control">
+                                    <label class="label" for="location">Activity Location:</label>
+                                    <input class="input form-control shadow-none" type="text" id="location" name="location" value="{{session['location']}}">
+                                </div>
+                                <!-- End Input 2 -->
+                                <!-- Input  -->
+                                <div class="form_control">
+                                    <label class="label" for="date">Date:</label>
+                                    <input class="input form-control shadow-none" type="date" id="date" name="date" value="{{session['date']}}">
+                                </div>
+                                <!-- Buttons -->
+                                <div class="buttons">
+                                    <button type="button" class="button brown" data-bs-dismiss="modal">CANCEL</button>
+                                    <button type="submit" value="Login" class="button green">SUBMIT</button>
+                                </div>
+                                <!-- End buttons -->
+                            </form>
+                            <!--form END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL -->
+            <!-- Right Box -->
+            <div class="friend_right">
+                <!-- title and button-->
+                <div class="flex">
+                    <h4 class="hover_text">Activities I'm Joining
+                        <span class="tool-tip" data-tooltip-title="Find An Activity To Join" data-tooltip-position="top">
+                            <a href="/getoutside/activities"><i class="plus fa-solid fa-circle-plus"></i></a>
+                        </span>
+                    </h4>
+                </div>
+                <!-- activity list -->
+                <div class="activity_links">
+                    <!-- loop through activities -->
+                    {% for a in joined %}
+                        <!-- filter for only logged in user -->
+                        <!-- display data -->
+                            <h5 class="d-flex justify-content-between align-content-center">
+                                <a class="link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name.capitalize()}} {{a.creator.last_name.capitalize()}} is going {{a.activity}} at {{a.location.title()}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                                <a class="unjoin2_button unfollow" href="/getoutside/activity/{{a.id}}/remove"><i class="x_out fa-solid fa-square-xmark fa-lg"></i></a>
+                            </h5>
+                    {% endfor %}
+                </div>
+                <!-- end activity list -->
+            </div>
+            <!-- end right box -->
+        </div>
+        <!-- Activities Container -->
+    </main>
+    <!-- End Main -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/83a0001255.js" crossorigin="anonymous"></script>
+</body>

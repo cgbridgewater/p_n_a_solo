@@ -2,8 +2,8 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app.models import activities
 import re
-from pprint import pprint
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
+
 
 ### USER CLASS
 class User:
@@ -25,30 +25,28 @@ class User:
     def registration_validation_check(user):
         is_valid = True 
         if len(user['first_name']) < 3:
-            flash("First Name must be at least 3 characters.", "register")
+            flash("First Name must be at least 3 characters!", "firstName")
             is_valid = False
         if len(user['last_name']) < 3:
-            flash("Last Name must be at least 3 characters.", "register")
+            flash("Last Name must be at least 3 characters!", "lastName")
             is_valid = False
         if len(user['password']) < 3:
-            flash("Password must be a valid password.", "register")
+            flash("Password must be a valid password!", "password")
             is_valid = False
-        if len(user['confirm_password']) < 4:
-            flash("Password must be a valid password.", "register")
+        if len(user['confirm_password']) < 1:
+            flash("Passwords must match!", "confirm")
             is_valid = False
         if user['password'] != user['confirm_password']:
-            flash("Passwords must match!!", "register")
+            flash("Passwords must match!", "confirm")
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address!", "register")
-            is_valid = False
-        if len(user['email']) < 3:
-            flash("Email must be a valid email.", "register")
+            flash("Email address invalid!", "email")
             is_valid = False
         if User.check_for_email_exists(user):
-            flash("This email is already taken!", "register")
+            flash("This email is already taken!", "email")
             is_valid = False
         return is_valid
+
 
 ### LOGIN VALIDATIONS (uiController)
     @staticmethod
@@ -68,13 +66,13 @@ class User:
     def update_validation_check(user):
         is_valid = True
         if len(user['first_name']) < 3:
-            flash("First name must be at least 3 charactors long.", "update")
+            flash("Must be at least 3 charactors long.", "update_first_name")
             is_valid = False
         if len(user['last_name']) < 3:
-            flash("Last name must be at least 3 charactors long.", "update")
+            flash("Must be at least 3 charactors long.", "update_last_name")
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address!", "update")
+            flash("Invalid email!", "update_email")
             is_valid = False
         return is_valid
 
@@ -113,7 +111,6 @@ class User:
         WHERE activities.user_id = %(id)s;
         """
         results = connectToMySQL('test_app').query_db(query,data)
-        pprint(results)
         one_user = cls(results[0])
         for row in results:
                 activity =  ({
@@ -126,7 +123,7 @@ class User:
             })
         one_user.activities_list.append(activities.Activity(activity))
         return one_user
-        
+
 
 ### GET USER BY ID (usersController + Activities)
     @classmethod
@@ -227,10 +224,9 @@ class User:
             })
             user_and_friends.append(user)
         return user_and_friends
-    
 
 
-### UPDATE USER BY ID (usersController)
+### UPDATE USER IMAGE BY ID (usersController)
     @classmethod
     def update_user_image(cls,data):
         query = """
