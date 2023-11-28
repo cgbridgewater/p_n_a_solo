@@ -45,15 +45,15 @@
                                 {% with messages = get_flashed_messages(category_filter=["firstName"]) %}
                                     {% if messages %}
                                         {% for message in messages %}
-                                            <label for="firstName" class="error">{{message}}</label>
+                                            <label for="first_name" class="error">{{message}}</label>
                                         {% endfor %}
                                     {% else %}
-                                    <label for="firstName" class="text-sm-start">First Name:</label>
+                                    <label for="first_name" class="text-sm-start">First Name:</label>
                                     {% endif %}
                                 {% endwith %}
                             </div>
                             <div>
-                                <input type="text" id="firstName" name="firstName" autofocus class="input form-control shadow-none" autocomplete="given-name" value="{{session['first_name']}}">
+                                <input type="text" id="first_name" name="first_name" autofocus class="input form-control shadow-none" autocomplete="given-name" value="{{session['first_name']}}">
                             </div>
                             <!-- END first name section -->
                             <!-- Last name section -->
@@ -61,15 +61,15 @@
                                 {% with messages = get_flashed_messages(category_filter=["lastName"]) %}
                                     {% if messages %}
                                         {% for message in messages %}
-                                            <label for="lastName" class="error">{{message}}</label>
+                                            <label for="last_name" class="error">{{message}}</label>
                                         {% endfor %}
                                     {% else %}
-                                    <label for="lastName" class="text-sm-start">Last Name:</label>
+                                    <label for="last_name" class="text-sm-start">Last Name:</label>
                                     {% endif %}
                                 {% endwith %}
                             </div>
                             <div>
-                                <input type="text" id="lastName" name="lastName" class="input form-control shadow-none" autocomplete="family-name" value="{{session['last_name']}}">
+                                <input type="text" id="last_name" name="last_name" class="input form-control shadow-none" autocomplete="family-name" value="{{session['last_name']}}">
                             </div>
                             <!-- END Last name section -->
                             <!-- Email section -->
