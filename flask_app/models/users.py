@@ -147,6 +147,7 @@ class User:
         DELETE FROM users 
         WHERE id = %(id)s;
         """
+        print("Deleted!!!")
         return connectToMySQL('test_app').query_db(query,data) 
 
 

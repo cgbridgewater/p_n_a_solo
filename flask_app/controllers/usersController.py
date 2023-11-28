@@ -58,6 +58,7 @@ def update_user_form_action():
 @app.route('/getoutside/myprofile/delete')
 def delete_user_route():
     if 'user_id' not in session:
+        print("ERROR 1!!")
         return redirect('/logout')
     data ={
         'id': session['user_id']
@@ -65,6 +66,7 @@ def delete_user_route():
     user_check = User.get_user_by_id(data)
     if session['user_id'] != user_check.id:
         return redirect('/logout')
+    print("ERROR 2!!")
     User.delete_user(data)
     return redirect('/logout') 
 
