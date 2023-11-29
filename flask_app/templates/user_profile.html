@@ -70,11 +70,11 @@
                     <tbody>
                     <tr>
                         <td><h4>Profile Name:</h4></td>
-                        <td><h4 class="text-end me-4 text_brown">{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h4></td>
+                        <td><h4 class="text-end text_brown">{{ user.first_name.capitalize() }} {{ user.last_name.capitalize() }}</h4></td>
                     </tr>
                     <tr>
                         <td><h4>Profile Email:</h4></td>
-                        <td><h4 class="text-end me-4 badge_wrap text_brown">{{ user.email }}</h4></td>
+                        <td><h4 class="text-end badge_wrap text_brown">{{ user.email }}</h4></td>
                     </tr>
                     <tr>
                         <td><h4>Events Created:</h4></td>
@@ -85,16 +85,16 @@
                                 <!-- increase counter for each event found -->
                                 {% set ns.events = ns.events +1 %}
                             {% endfor %}
-                        <td><h4 class="text-end me-4 text_brown">{{ ns.events }}</h4></td>
+                        <td><h4 class="text-end text_brown">{{ ns.events }}</h4></td>
                     </tr>
                     <tr>
                         <td><h4>Member Since:</h4></td>
-                        <td><h4 class="text-end me-4 text_brown">{{ user.created_at.strftime("%B %e, %Y") }}</h4></td>
+                        <td><h4 class="text-end text_brown">{{ user.created_at.strftime("%B %e, %Y") }}</h4></td>
                     </tr>
                     <tr>
                         <td><h4>My Badges:</h4></td>
                         <td>
-                            <h4 class="text-end me-4">
+                            <h4 class="text-end m-0">
                                 <!-- counter for joined activities -->
                                 {% set nsjoined = namespace(joined =0) %}
                                 {% for join in all_joined %}

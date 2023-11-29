@@ -53,7 +53,7 @@
                                 {% endwith %}
                             </div>
                             <div>
-                                <input type="text" id="first_name" name="first_name" autofocus class="input form-control shadow-none" autocomplete="given-name" value="{{session['first_name']}}">
+                                <input type="text" id="firstName" name="first_name" autofocus class="input form-control shadow-none" autocomplete="given-name" value="{{session['first_name']}}">
                             </div>
                             <!-- END first name section -->
                             <!-- Last name section -->
@@ -61,7 +61,7 @@
                                 {% with messages = get_flashed_messages(category_filter=["lastName"]) %}
                                     {% if messages %}
                                         {% for message in messages %}
-                                            <label for="last_name" class="error">{{message}}</label>
+                                            <label for="lastName" class="error">{{message}}</label>
                                         {% endfor %}
                                     {% else %}
                                     <label for="last_name" class="text-sm-start">Last Name:</label>

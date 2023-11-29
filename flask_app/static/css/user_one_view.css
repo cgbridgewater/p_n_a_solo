@@ -1,5 +1,4 @@
 /* style for index page */
-
 .logo {
     width: 100%;
     height: 25vh;
@@ -22,7 +21,7 @@
     align-items: center;
     margin: 1% 0;
     width: 20%;
-    min-width: 350px;
+    min-width: 340px;
     padding:5px;
     background-color: honeydew;
     opacity: 85%;
@@ -62,7 +61,7 @@
     border-radius: 5px;
     padding:5px;
     width: 30%;
-    min-width: 350px;
+    min-width: 340px;
     box-shadow: 5px 8px 10px rgba(2, 20, 2, 0.5);
 }
 
@@ -110,7 +109,7 @@ td {
 .friend_right {
     margin: 1% 0;
     width: 30%;
-    min-width: 350px;
+    min-width: 340px;
     min-height: 150px;
     padding: 1%;
     background-color: honeydew;

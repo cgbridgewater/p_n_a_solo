@@ -47,18 +47,6 @@
             <div class="activity_form">
                 <!-- header -->
                 <h3>Update your activity</h3>
-                <!-- validation error return -->
-                {% with messages = get_flashed_messages(category_filter=["activity"]) %}
-                    <!-- declare a variable called messages -->
-                    {% if messages %}
-                        <!-- check if there are any messages -->
-                        {% for message in messages %}
-                        <!-- loop through the messages -->
-                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                <!-- End validation error return -->
                 <!-- form start -->
                 <form action='/getoutside/activity/{{activity.id}}/edit' method="POST">
                     <!-- Input 1 -->
@@ -68,7 +56,7 @@
                         {% with messages = get_flashed_messages(category_filter=["type"]) %}
                             {% if messages %}
                                 {% for message in messages %}
-                                    <label class="form_text" htmlfor="activity"><span class="error">{{message}}</span></label>
+                                    <label class="form_text" htmlfor="activity"><span class="error">{{message}} <br> Required!</span></label>
                                 {% endfor %}
                             {% else %}
                                 <label class="form_text" htmlfor="activity">Activity Type:</label>
@@ -101,7 +89,7 @@
                         {% with messages = get_flashed_messages(category_filter=["location"]) %}
                             {% if messages %}
                                 {% for message in messages %}
-                                    <label class="form_text" htmlfor="location"><span class="error">{{message}}</span></label>
+                                    <label class="form_text" htmlfor="location"><span class="error">{{message}} <br> Required!</span></label>
                                 {% endfor %}
                             {% else %}
                                 <label class="form_text" htmlfor="location">Location:</label>
@@ -116,7 +104,7 @@
                         {% with messages = get_flashed_messages(category_filter=["date"]) %}
                             {% if messages %}
                                 {% for message in messages %}
-                                    <label class="form_text" htmlfor="date"><span class="error">{{message}}</span></label>
+                                    <label class="form_text" htmlfor="date"><span class="error">{{message}} <br> Required!</span></label>
                                 {% endfor %}
                             {% else %}
                                 <label class="form_text" htmlfor="date">Date:</label>

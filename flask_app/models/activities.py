@@ -25,17 +25,17 @@ class Activity:
         is_valid = True
         try:
             datetime.datetime.strptime(activity['date'], '%Y-%m-%d')
-            if datetime.datetime.strptime(activity['date'], '%Y-%m-%d') < datetime.datetime.now():
-                flash("Date must be in future!", "date")
+            if datetime.datetime.strptime(activity['date'], '%Y-%m-%d') < datetime.datetime.now() - datetime.timedelta (days=1):
+                flash("Futre Date", "date")
                 is_valid = False
         except ValueError:
-            flash("Date required!", "date")
+            flash("Date", "date")
             is_valid = False
-        if len(activity['location']) < 3:
-            flash("Location must have 3 characters!", "location")
+        if len(activity['location']) < 1:
+            flash("Location", "location")
             is_valid = False
         if len(activity['activity']) < 1:
-            flash("Activity Type required!", "type")
+            flash("Activity", "type")
             is_valid = False
         return is_valid 
 

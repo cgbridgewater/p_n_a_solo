@@ -1,5 +1,4 @@
 /* style for index page */
-
 * {
     margin: 0;
     padding: 0;
@@ -26,7 +25,7 @@
     align-items: center;
     margin: 1% 0;
     width: 20%;
-    min-width: 350px;
+    min-width: 340px;
     padding:5px;
     background-color: honeydew;
     opacity: 85%;
@@ -76,7 +75,6 @@
     background-color: green;
 }
 
-
 .edit_btn:hover {
 	background-color: green;
     color: #FFFEF5;
@@ -102,7 +100,7 @@
     border-radius: 5px;
     padding:5px;
     width: 40%;
-    min-width: 350px;
+    min-width: 340px;
     box-shadow: 5px 8px 10px rgba(2, 20, 2, 0.5);
 }
 
@@ -123,8 +121,6 @@ h4{
         transition:  0.5s;
     }
 }
-
-
 
 h5 {
     margin: 0;
@@ -152,7 +148,6 @@ td {
     opacity: 90%;
     text-shadow:  0.2rem 0.2rem .5rem rgba(0, 0, 0, 0.5);
 }
-
 
 .flex {
     display: flex;
@@ -196,7 +191,7 @@ td {
     margin: 1% 0;
     padding: 5px 10px;
     width: 20%;
-    min-width: 350px;
+    min-width: 340px;
     background-color: honeydew;
     opacity: 85%;
     border: 3px solid green;
@@ -212,7 +207,7 @@ td {
     height:307px;
     overflow-y:scroll;
     overflow-x: hidden;
-    padding: 0px 10px;
+    padding: 0px 6px;
     background-color:#FFFFF5;
     border: 0.5px solid rgba(0,128,0,0.4);
 }
@@ -245,7 +240,6 @@ td {
     border-radius: 20%;
 }
 
-
 @media (max-width:799px) {
     .spacer{
         border: 0px ;
@@ -266,7 +260,7 @@ td {
 .friend_left, .friend_right {
     margin: 5px 0;
     width: 45%;
-    min-width: 350px;
+    min-width: 340px;
     min-height: 150px;
     padding: 5px 10px 15px 10px;
     background-color: honeydew;

@@ -45,7 +45,7 @@
         <!-- end menu popout -->
             <!-- page title -->
         <div class="user">
-            <h1 class="text_green mt-2">Get OUTSIDE with {{activity.creator.first_name.title()}} and go {{activity.activity}}!</h1>
+            <h1 class="size">Get OUTSIDE with {{activity.creator.first_name.title()}} <br class="break"> and go {{activity.activity}}!</h1>
         </div>
         <!-- Activities Container -->
         <div class="activity_container">
@@ -66,15 +66,15 @@
                         </div>
                     </div>
                     <!-- activity deets -->
-                    <p class="text_green"><i class="fas fa-info-circle" style="color: #008000;"></i> What I'm Doing: <span class="text_brown">
+                    <p class="text_green ms-1 mt-1"><i class="fas fa-info-circle" style="color: #008000;"></i> What I'm Doing: <span class="text_brown">
                         {% if activity.activity == "to the Gym"%}
                             Gym Session
                         {% else %}
                             {{activity.activity}}
                         {% endif %}
                     </span></p>
-                    <p class="text_green"><i class="far fa-calendar-alt" style="color: #008000;"></i> When: <span class="text_brown">{{activity.date.strftime("%B %e, %Y")}}</span></p>
-                    <p class="text_green"><i class="fas fa-map-marked-alt" style="color: #008000;"></i> Where: <span class="text_brown">{{activity.location.title()}}</span></p>
+                    <p class="text_green ms-1"><i class="far fa-calendar-alt" style="color: #008000;"></i> When: <span class="text_brown">{{activity.date.strftime("%B %e, %Y")}}</span></p>
+                    <p class="text_green ms-1"><i class="fas fa-map-marked-alt" style="color: #008000;"></i> Where: <span class="text_brown">{{activity.location.title()}}</span></p>
                     <!-- end activity deets -->
                 </div>
                 <!-- end top of details box --> 
