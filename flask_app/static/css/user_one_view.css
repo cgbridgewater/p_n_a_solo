@@ -68,7 +68,12 @@
 .link {
     font-size: 16px;
     text-decoration: none;
-    color:#857659;
+    color:#6b0f1a;
+}
+
+.text_brown {
+    color: #6b0f1a;
+    text-align: end;
 }
 
 .link:hover {
