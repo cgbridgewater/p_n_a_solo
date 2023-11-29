@@ -26,6 +26,36 @@
     z-index: 99;
 }
 
+@media (min-width:499px) {
+    .menu_trigger{
+        left: -30px;
+        padding-top: 10px;
+        top:15%;
+        transition: .4s;
+    }
+}
+
+@media (min-width:767px) {
+    .menu_trigger{
+        top:18%;
+        transition: .4s;
+    }
+}
+
+@media (min-width:991px) {
+    .menu_trigger{
+        top:24%;
+        transition: .4s;
+    }
+}
+
+@media (min-width:1200px) {
+    .menu_trigger{
+        top:28%;
+        transition: .4s;
+    }
+}
+
 .menu_trigger:hover {
     color:#6b0f1a;
     box-shadow: 0px 0px 30px 3px rgb(153, 134, 109);

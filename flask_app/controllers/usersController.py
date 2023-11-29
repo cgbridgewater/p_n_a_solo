@@ -175,7 +175,6 @@ def allowed_image(filename):
     else:
         return False
 
-
 @app.route("/getoutside/addimage", methods=['POST'])
 def upload_image():
     if 'user_id' not in session:
