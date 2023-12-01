@@ -1,5 +1,7 @@
 ## GetOUTSIDE 🌳🚶🌲
 
+**ReadME updates coming soon to reflect site updates**
+
 See the LIVE site here 👉 <a href="http://54.201.23.108/getoutside">GetOUTSIDE</a>
 <p>Don't want to make an account? Explore the site with the demo account!</p> 
 Email: demo@demo.com
